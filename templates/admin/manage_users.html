@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý người dùng - TravelAI Booking</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin/admin.css') }}">
+</head>
+<body>
+
+<div class="admin-layout">
+
+    <aside class="sidebar">
+        <div class="admin-logo">
+            <h2>TravelAI</h2>
+            <p>Admin Panel</p>
+        </div>
+
+        <nav class="admin-menu">
+            <a href="/admin/dashboard" >Tổng quan</a>
+            <a href="/admin/tours">Quản lý tour</a>
+            <a href="/admin/bookings">Quản lý đơn</a>
+            <a href="/admin/banners">Quản lý banner</a>
+            <a href="/admin/promotions">Quản lý khuyến mãi</a>
+            <a href="/admin/users"class="active">Người dùng</a>
+            <a href="/">Về website</a>
+            <a href="/logout">Đăng xuất</a>
+        </nav>
+    </aside>
+
+    <main class="admin-content">
+        <div class="admin-topbar">
+            <div>
+                <h1>Quản lý người dùng</h1>
+                <p>Theo dõi tài khoản khách hàng và phân quyền admin/customer.</p>
+            </div>
+
+            <div class="topbar-actions">
+                <a href="/admin/dashboard" class="secondary">Tổng quan</a>
+            </div>
+        </div>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="flash-box">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <section class="admin-card">
+            <div class="table-wrapper">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Họ tên</th>
+                            <th>Email</th>
+                            <th>Số điện thoại</th>
+                            <th>Quyền</th>
+                            <th>Ngày tạo</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% if users %}
+                            {% for user in users %}
+                                <tr>
+                                    <td>#{{ user[0] }}</td>
+                                    <td>{{ user[1] }}</td>
+                                    <td>{{ user[2] }}</td>
+                                    <td>{{ user[3] }}</td>
+
+                                    <td>
+                                        {% if user[4] == "admin" %}
+                                            <span class="status active">Admin</span>
+                                        {% else %}
+                                            <span class="status pending">Customer</span>
+                                        {% endif %}
+                                    </td>
+
+                                    <td>{{ user[5] }}</td>
+
+                                    <td>
+                                        <div class="action-group">
+                                            {% if user[4] == "customer" %}
+                                                <a href="{{ url_for('admin_change_user_role', user_id=user[0], new_role='admin') }}"
+                                                   class="edit-btn"
+                                                   onclick="return confirm('Bạn có chắc muốn cấp quyền admin cho tài khoản này?')">
+                                                    Cấp admin
+                                                </a>
+                                            {% else %}
+                                                <a href="{{ url_for('admin_change_user_role', user_id=user[0], new_role='customer') }}"
+                                                   class="delete-btn"
+                                                   onclick="return confirm('Bạn có chắc muốn hạ quyền tài khoản này về customer?')">
+                                                    Hạ quyền
+                                                </a>
+                                            {% endif %}
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="7">Chưa có người dùng nào.</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+</div>
+
+</body>
+</html>

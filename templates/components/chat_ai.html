@@ -1,0 +1,149 @@
+<div class="chat-ai-widget">
+
+    <button class="chat-toggle" type="button" onclick="toggleChatBox()">
+        🤖
+    </button>
+
+    <div class="chat-box" id="chatBox">
+        <div class="chat-header">
+            <div>
+                <h3>AI Travel Assistant</h3>
+                <span>Tư vấn tour bằng Gemini AI</span>
+            </div>
+
+            <button type="button" onclick="toggleChatBox()">×</button>
+        </div>
+
+        <div class="chat-body" id="chatBody">
+            <div class="chat-message bot">
+                Xin chào! Tôi có thể tư vấn tour phù hợp theo ngân sách, điểm đến, thời gian và sở thích của bạn.
+            </div>
+        </div>
+
+        <div class="chat-input-area">
+            <input
+                type="text"
+                id="chatInput"
+                placeholder="Ví dụ: Tôi muốn đi biển khoảng 10 triệu..."
+                onkeydown="handleChatEnter(event)"
+            >
+
+            <button type="button" onclick="sendChatMessage()">
+                Gửi
+            </button>
+        </div>
+
+        <div class="chat-footer-note">
+            AI tư vấn dựa trên dữ liệu tour trong hệ thống.
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function toggleChatBox() {
+        const chatBox = document.getElementById("chatBox");
+
+        if (!chatBox) {
+            console.log("Không tìm thấy chatBox");
+            return;
+        }
+
+        chatBox.classList.toggle("active");
+    }
+
+    function handleChatEnter(event) {
+        if (event.key === "Enter") {
+            sendChatMessage();
+        }
+    }
+
+    function addChatMessage(message, sender) {
+        const chatBody = document.getElementById("chatBody");
+
+        const messageDiv = document.createElement("div");
+        messageDiv.className = "chat-message " + sender;
+
+        // Giữ xuống dòng cho đẹp
+        messageDiv.innerHTML = String(message).replace(/\n/g, "<br>");
+
+        chatBody.appendChild(messageDiv);
+        chatBody.scrollTop = chatBody.scrollHeight;
+    }
+
+    function addTourSuggestions(tours) {
+        if (!tours || tours.length === 0) {
+            return;
+        }
+
+        const chatBody = document.getElementById("chatBody");
+
+        const wrapper = document.createElement("div");
+        wrapper.className = "chat-tour-suggestions";
+
+        tours.forEach(tour => {
+            const card = document.createElement("div");
+            card.className = "chat-tour-card";
+
+            card.innerHTML = `
+                <div class="chat-tour-title">${tour.name}</div>
+                <div class="chat-tour-meta">📍 ${tour.destination}</div>
+                <div class="chat-tour-meta">⏱ ${tour.duration}</div>
+                <div class="chat-tour-meta">📅 ${tour.departure_date}</div>
+                <div class="chat-tour-price">${Number(tour.price).toLocaleString("vi-VN")}đ</div>
+                <a href="${tour.detail_url}" class="chat-tour-btn">Xem chi tiết</a>
+            `;
+
+            wrapper.appendChild(card);
+        });
+
+        chatBody.appendChild(wrapper);
+        chatBody.scrollTop = chatBody.scrollHeight;
+    }
+
+    function setChatLoading(isLoading) {
+        const chatInput = document.getElementById("chatInput");
+        const sendButton = document.querySelector(".chat-input-area button");
+
+        chatInput.disabled = isLoading;
+        sendButton.disabled = isLoading;
+        sendButton.textContent = isLoading ? "..." : "Gửi";
+    }
+
+    function sendChatMessage() {
+        const input = document.getElementById("chatInput");
+        const message = input.value.trim();
+
+        if (!message) {
+            return;
+        }
+
+        addChatMessage(message, "user");
+        input.value = "";
+
+        setChatLoading(true);
+
+        fetch("/chatbot", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                message: message
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            addChatMessage(data.reply || "AI chưa có phản hồi phù hợp.", "bot");
+            addTourSuggestions(data.tours || []);
+        })
+        .catch(error => {
+            console.error(error);
+            addChatMessage("Không thể kết nối tới AI. Vui lòng thử lại sau.", "bot");
+        })
+        .finally(() => {
+            setChatLoading(false);
+            input.focus();
+        });
+    }
+</script>

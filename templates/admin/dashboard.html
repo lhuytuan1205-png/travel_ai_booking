@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard - TravelAI Booking</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin/admin.css') }}">
+</head>
+<body>
+
+<div class="admin-layout">
+
+    <aside class="sidebar">
+        <div class="admin-logo">
+            <h2>TravelAI</h2>
+            <p>Admin Panel</p>
+        </div>
+
+        <nav class="admin-menu">
+            <a href="/admin/dashboard" class="active">Tổng quan</a>
+            <a href="/admin/tours">Quản lý tour</a>
+            <a href="/admin/bookings">Quản lý đơn</a>
+            <a href="/admin/banners">Quản lý banner</a>
+            <a href="/admin/promotions">Quản lý khuyến mãi</a>
+            <a href="/admin/users">Người dùng</a>
+            <a href="/">Về website</a>
+            <a href="/logout">Đăng xuất</a>
+        </nav>
+    </aside>
+
+    <main class="admin-content">
+
+        <div class="admin-topbar">
+            <div>
+                <h1>Tổng quan quản trị</h1>
+                <p>Xin chào, {{ session.get("full_name") }}. Đây là khu vực quản lý hệ thống.</p>
+            </div>
+
+            <div class="topbar-actions">
+                <a href="/admin/tours/add">+ Thêm tour</a>
+                <a href="/admin/bookings" class="secondary">Xem đơn</a>
+                <a href="/" class="secondary">Xem website</a>
+            </div>
+        </div>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="flash-box">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <!-- THỐNG KÊ -->
+        <section class="stats-grid">
+            <div class="stat-card">
+                <span>Tổng số tour</span>
+                <h2>{{ total_tours }}</h2>
+                <p>Tour trong hệ thống</p>
+            </div>
+
+            <div class="stat-card">
+                <span>Tổng đơn đặt</span>
+                <h2>{{ total_bookings }}</h2>
+                <p>Đơn khách đã gửi</p>
+            </div>
+
+            <div class="stat-card">
+                <span>Khách hàng</span>
+                <h2>{{ total_customers }}</h2>
+                <p>Tài khoản customer</p>
+            </div>
+
+            <div class="stat-card">
+                <span>Doanh thu dự kiến</span>
+                <h2>{{ "{:,.0f}".format((total_revenue or 0)|float) }}đ</h2>
+                <p>Không tính đơn đã hủy</p>
+            </div>
+        </section>
+
+        <!-- NỘI DUNG DASHBOARD -->
+        <section class="dashboard-grid">
+
+            <!-- ĐƠN MỚI NHẤT -->
+            <div class="admin-card">
+                <div class="card-heading">
+                    <div>
+                        <h2>Đơn đặt tour mới nhất</h2>
+                        <p>5 đơn gần đây nhất từ khách hàng.</p>
+                    </div>
+
+                    <a href="/admin/bookings">Xem tất cả</a>
+                </div>
+
+                <div class="dashboard-list">
+                    {% if latest_bookings %}
+                        {% for booking in latest_bookings %}
+                            <div class="dashboard-list-item">
+                                <div>
+                                    <h3>#{{ booking[0] }} - {{ booking[1] }}</h3>
+                                    <p>{{ booking[7] }}</p>
+                                    <span>☎ {{ booking[2] }} | 👥 {{ booking[3] }} khách</span>
+                                </div>
+
+                                <div class="dashboard-item-right">
+                                    <strong>{{ "{:,.0f}".format((booking[4] or 0)|float) }}đ</strong>
+
+                                    {% if booking[5] == "pending" %}
+                                        <span class="status pending">Chờ xác nhận</span>
+                                    {% elif booking[5] == "confirmed" %}
+                                        <span class="status active">Đã xác nhận</span>
+                                    {% else %}
+                                        <span class="status inactive">Đã hủy</span>
+                                    {% endif %}
+
+                                    <a href="{{ url_for('admin_booking_detail', booking_id=booking[0]) }}"
+                                       class="mini-view-btn">
+                                        Xem
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p class="empty-dashboard-text">Chưa có đơn đặt tour nào.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- TOUR MỚI NHẤT -->
+            <div class="admin-card">
+                <div class="card-heading">
+                    <div>
+                        <h2>Tour mới thêm</h2>
+                        <p>5 tour mới nhất trong hệ thống.</p>
+                    </div>
+
+                    <a href="/admin/tours">Quản lý tour</a>
+                </div>
+
+                <div class="dashboard-list">
+                    {% if latest_tours %}
+                        {% for tour in latest_tours %}
+                            <div class="dashboard-list-item">
+                                <div>
+                                    <h3>#{{ tour[0] }} - {{ tour[1] }}</h3>
+                                    <p>📍 {{ tour[2] }}</p>
+                                    <span>Giá: {{ "{:,.0f}".format((tour[3] or 0)|float) }}đ</span>
+                                </div>
+
+                                <div class="dashboard-item-right tour-dashboard-actions">
+                                    {% if tour[4] == "active" %}
+                                        <span class="status active">Đang bán</span>
+                                    {% else %}
+                                        <span class="status inactive">Đã ẩn</span>
+                                    {% endif %}
+
+                                    <a href="/admin/tours/edit/{{ tour[0] }}" class="mini-edit-btn">Sửa</a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p class="empty-dashboard-text">Chưa có tour nào.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+</body>
+</html>

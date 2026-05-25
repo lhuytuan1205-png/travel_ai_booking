@@ -1,0 +1,273 @@
+@media (max-width: 992px) {
+    .header-top {
+        flex-wrap: wrap;
+    }
+
+    .header-search {
+        order: 3;
+        width: 100%;
+        flex: unset;
+    }
+
+    .tour-search-box {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .service-grid,
+    .tour-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .ai-content {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-content h1 {
+        font-size: 42px;
+    }
+}
+
+@media (max-width: 576px) {
+    .header-top {
+        align-items: flex-start;
+    }
+
+    .logo h2 {
+        font-size: 20px;
+    }
+
+    .header-actions {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+    .hello-user {
+        width: 100%;
+    }
+
+    .main-nav {
+        gap: 18px;
+    }
+
+    .hero {
+        min-height: 600px;
+    }
+
+    .hero-overlay {
+        min-height: 600px;
+    }
+
+    .hero-content h1 {
+        font-size: 34px;
+    }
+
+    .hero-desc {
+        font-size: 16px;
+    }
+
+    .tour-search-box {
+        grid-template-columns: 1fr;
+    }
+
+    .tour-search-box button {
+        padding: 14px;
+    }
+
+    .service-grid,
+    .tour-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .section-title h2 {
+        font-size: 28px;
+    }
+
+    .ai-content {
+        padding: 26px;
+    }
+
+    .chat-line.user {
+        margin-left: 0;
+    }
+}
+@media (max-width: 992px) {
+    .tour-page {
+        grid-template-columns: 1fr;
+    }
+
+    .filter-box {
+        position: static;
+    }
+
+    .tour-card {
+        grid-template-columns: 1fr;
+    }
+
+    .tour-content {
+        grid-template-columns: 1fr;
+    }
+
+    .tour-price-box {
+        border-left: none;
+        border-top: 1px solid #e5e7eb;
+        padding-left: 0;
+        padding-top: 18px;
+    }
+}
+
+@media (max-width: 576px) {
+    .page-banner h1 {
+        font-size: 32px;
+    }
+
+    .list-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .sort-box {
+        width: 100%;
+    }
+
+    .sort-box select {
+        width: 100%;
+    }
+
+    .tour-image {
+        min-height: 210px;
+    }
+
+    .tour-main-info h3 {
+        font-size: 19px;
+    }
+
+    .tour-content {
+        padding: 18px;
+    }
+}
+@media (max-width: 992px) {
+    .detail-layout,
+    .booking-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .detail-right {
+        position: static;
+    }
+}
+
+@media (max-width: 576px) {
+    .detail-hero {
+        height: 360px;
+        border-radius: 22px;
+    }
+
+    .detail-hero-content {
+        left: 22px;
+        bottom: 22px;
+    }
+
+    .detail-hero-content h1 {
+        font-size: 30px;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .booking-title h1 {
+        font-size: 30px;
+    }
+
+    .success-card {
+        padding: 24px;
+    }
+}
+@media (max-width: 768px) {
+    .history-main {
+        flex-direction: column;
+    }
+
+    .history-price {
+        text-align: left;
+    }
+
+    .profile-title h1 {
+        font-size: 30px;
+    }
+}
+@media (max-width: 900px) {
+    .account-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 576px) {
+    .avatar-box {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .info-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .info-row strong {
+        text-align: left;
+    }
+}
+@media (max-width: 992px) {
+    .hero-slider {
+        height: 720px;
+    }
+
+    .slide-content {
+        padding-bottom: 220px;
+    }
+
+    .slide-content h1 {
+        font-size: 42px;
+    }
+
+    .slide-dots {
+        bottom: 240px;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-slider {
+        height: 760px;
+    }
+
+    .slide-content {
+        padding: 40px 24px 250px;
+    }
+
+    .slide-content h1 {
+        font-size: 32px;
+    }
+
+    .slide-content p {
+        font-size: 16px;
+    }
+
+    .slide-btn {
+        width: 38px;
+        height: 38px;
+        font-size: 28px;
+    }
+
+    .slide-btn.prev {
+        left: 12px;
+    }
+
+    .slide-btn.next {
+        right: 12px;
+    }
+
+    .slide-dots {
+        bottom: 285px;
+    }
+}

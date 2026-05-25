@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Đặt tour thành công - TravelAI Booking</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/customer/components.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/customer/booking.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/customer/responsive.css') }}">
+</head>
+<body>
+
+{% include 'components/header.html' %}
+
+<main class="success-page-new">
+
+    <section class="success-hero-card">
+        <div class="success-icon-large">✓</div>
+
+        <h1>Đặt tour thành công!</h1>
+
+        <p>
+            Cảm ơn bạn đã đặt tour tại <b>TravelAI Booking</b>.
+            Đơn đặt tour của bạn đã được ghi nhận và đang chờ admin xác nhận.
+        </p>
+
+        <div class="success-status">
+            Trạng thái hiện tại:
+            <span>
+                {% if booking[10] == "pending" %}
+                    Chờ xác nhận
+                {% elif booking[10] == "confirmed" %}
+                    Đã xác nhận
+                {% else %}
+                    Đã hủy
+                {% endif %}
+            </span>
+        </div>
+    </section>
+
+    <section class="success-layout">
+
+        <div class="success-detail-card">
+            <h2>Thông tin đơn đặt tour</h2>
+
+            <div class="success-info-grid">
+                <div>
+                    <span>Mã đơn</span>
+                    <strong>#{{ booking[0] }}</strong>
+                </div>
+
+                <div>
+                    <span>Ngày đặt</span>
+                    <strong>{{ booking[11] }}</strong>
+                </div>
+
+                <div>
+                    <span>Họ tên khách hàng</span>
+                    <strong>{{ booking[1] }}</strong>
+                </div>
+
+                <div>
+                    <span>Email</span>
+                    <strong>{{ booking[2] }}</strong>
+                </div>
+
+                <div>
+                    <span>Số điện thoại</span>
+                    <strong>{{ booking[3] }}</strong>
+                </div>
+
+                <div>
+                    <span>Số lượng khách</span>
+                    <strong>{{ booking[4] }} khách</strong>
+                </div>
+
+                <div>
+                    <span>Giá gốc</span>
+                    <strong>{{ "{:,.0f}".format(booking[6] or 0) }}đ</strong>
+                </div>
+
+                <div>
+                    <span>Mã giảm giá</span>
+                    {% if booking[8] %}
+                        <strong>{{ booking[8] }}</strong>
+                    {% else %}
+                        <strong>Không áp dụng</strong>
+                    {% endif %}
+                </div>
+
+                <div>
+                    <span>Số tiền giảm</span>
+                    <strong class="discount-price">-{{ "{:,.0f}".format(booking[7] or 0) }}đ</strong>
+                </div>
+
+                <div>
+                    <span>Tổng tiền sau giảm</span>
+                    <strong class="success-price">{{ "{:,.0f}".format(booking[9] or 0) }}đ</strong>
+                </div>
+            </div>
+
+            <div class="success-note-box">
+                <h3>Ghi chú của bạn</h3>
+                {% if booking[5] %}
+                    <p>{{ booking[5] }}</p>
+                {% else %}
+                    <p>Bạn không để lại ghi chú.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <aside class="success-tour-card">
+            <img src="{{ url_for('static', filename='images/tours/' + booking[16]) }}"
+                 alt="{{ booking[12] }}"
+                 class="success-tour-image">
+
+            <h2>{{ booking[12] }}</h2>
+
+            <div class="success-tour-info">
+                <p><b>Điểm đến:</b> {{ booking[13] }}</p>
+                <p><b>Thời gian:</b> {{ booking[14] }}</p>
+                <p><b>Ngày khởi hành:</b> {{ booking[15] }}</p>
+            </div>
+
+            <div class="next-step-box">
+                <h3>Bước tiếp theo</h3>
+                <ul>
+                    <li>Admin sẽ kiểm tra thông tin đặt tour.</li>
+                    <li>Đơn của bạn hiện đang ở trạng thái chờ xác nhận.</li>
+                    <li>Bạn có thể theo dõi trạng thái trong mục “Đơn của tôi”.</li>
+                </ul>
+            </div>
+
+            <div class="success-actions-new">
+                <a href="/my-bookings" class="primary-action">Xem đơn của tôi</a>
+                <a href="/tours" class="secondary-action">Xem thêm tour</a>
+                <a href="/" class="secondary-action">Về trang chủ</a>
+            </div>
+        </aside>
+
+    </section>
+
+</main>
+
+{% include 'components/chat_ai.html' %}
+{% include 'components/footer.html' %}
+
+</body>
+</html>

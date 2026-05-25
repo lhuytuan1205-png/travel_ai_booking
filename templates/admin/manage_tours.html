@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý tour - TravelAI Booking</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin/admin.css') }}">
+</head>
+<body>
+
+<div class="admin-layout">
+
+    <aside class="sidebar">
+        <div class="admin-logo">
+            <h2>TravelAI</h2>
+            <p>Admin Panel</p>
+        </div>
+
+        <nav class="admin-menu">
+            <a href="/admin/dashboard">Tổng quan</a>
+            <a href="/admin/tours" class="active">Quản lý tour</a>
+            <a href="/admin/bookings">Quản lý đơn</a>
+            <a href="/admin/banners">Quản lý banner</a>
+            <a href="/admin/promotions">Quản lý khuyến mãi</a>
+            <a href="/admin/users">Người dùng</a>
+            <a href="/">Về website</a>
+            <a href="/logout">Đăng xuất</a>
+        </nav>
+    </aside>
+
+    <main class="admin-content">
+        <div class="admin-topbar">
+            <div>
+                <h1>Quản lý tour</h1>
+                <p>Thêm, sửa, xóa và ẩn/hiện các tour du lịch.</p>
+            </div>
+
+            <div class="topbar-actions">
+                <a href="/admin/tours/add">+ Thêm tour</a>
+            </div>
+        </div>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="flash-box">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <section class="admin-card">
+            <form class="admin-filter-form" method="GET" action="/admin/tours">
+                <div class="filter-item">
+                    <label>Tên tour</label>
+                    <input type="text" name="keyword" placeholder="Nhập tên tour..." value="{{ keyword }}">
+                </div>
+
+                <div class="filter-item">
+                    <label>Điểm đến</label>
+                    <select name="destination">
+                        <option value="">Tất cả điểm đến</option>
+                        {% for item in destinations %}
+                            <option value="{{ item[0] }}" {% if destination == item[0] %}selected{% endif %}>
+                                {{ item[0] }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="filter-item">
+                    <label>Trạng thái</label>
+                    <select name="status">
+                        <option value="">Tất cả trạng thái</option>
+                        <option value="active" {% if status == "active" %}selected{% endif %}>Đang bán</option>
+                        <option value="inactive" {% if status == "inactive" %}selected{% endif %}>Đã ẩn</option>
+                    </select>
+                </div>
+
+                <div class="filter-actions">
+                    <button type="submit">Tìm kiếm</button>
+                    <a href="/admin/tours">Xóa lọc</a>
+                </div>
+            </form>
+            <div class="table-wrapper">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Ảnh</th>
+                            <th>Tên tour</th>
+                            <th>Điểm đến</th>
+                            <th>Giá</th>
+                            <th>Thời gian</th>
+                            <th>Ngày đi</th>
+                            <th>Trạng thái</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% if tours %}
+                            {% for tour in tours %}
+                                <tr>
+                                    <td>#{{ tour[0] }}</td>
+
+                                    <td>
+                                        <img src="{{ url_for('static', filename='images/tours/' + tour[8]) }}" alt="{{ tour[1] }}">
+                                    </td>
+
+                                    <td>{{ tour[1] }}</td>
+                                    <td>{{ tour[2] }}</td>
+                                    <td>{{ "{:,.0f}".format(tour[5]) }}đ</td>
+                                    <td>{{ tour[6] }}</td>
+                                    <td>{{ tour[7] }}</td>
+
+                                    <td>
+                                        {% if tour[9] == "active" %}
+                                            <span class="status active">Đang bán</span>
+                                        {% else %}
+                                            <span class="status inactive">Đã ẩn</span>
+                                        {% endif %}
+                                    </td>
+
+                                    <td>
+                                        <div class="action-group">
+                                            <a href="/admin/tours/edit/{{ tour[0] }}" class="edit-btn">Sửa</a>
+                                            <a href="/admin/tours/delete/{{ tour[0] }}"
+                                               class="delete-btn"
+                                               onclick="return confirm('Bạn có chắc muốn xóa hoặc ẩn tour này không?')">
+                                                Xóa
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="9">Chưa có tour nào.</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+            {% if total_pages > 1 %}
+                <div class="pagination">
+                    {% if page > 1 %}
+                        <a href="{{ url_for('admin_manage_tours', page=page-1, keyword=keyword, destination=destination, status=status) }}">
+                            « Trước
+                        </a>
+                    {% endif %}
+
+                    {% for p in range(1, total_pages + 1) %}
+                        <a href="{{ url_for('admin_manage_tours', page=p, keyword=keyword, destination=destination, status=status) }}"
+                        class="{% if p == page %}active{% endif %}">
+                            {{ p }}
+                        </a>
+                    {% endfor %}
+
+                    {% if page < total_pages %}
+                        <a href="{{ url_for('admin_manage_tours', page=page+1, keyword=keyword, destination=destination, status=status) }}">
+                            Sau »
+                        </a>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </section>
+    </main>
+
+</div>
+
+</body>
+</html>

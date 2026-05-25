@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Liên hệ - TravelAI Booking</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/customer/components.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/customer/tours.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/customer/services.css') }}">
+</head>
+<body>
+
+{% include 'components/header.html' %}
+
+<main class="service-page">
+    <section class="service-hero">
+        <div class="service-hero-content">
+            <p>Liên hệ tư vấn</p>
+            <h1>TravelAI luôn sẵn sàng hỗ trợ</h1>
+            <span>
+                Khách hàng có thể gửi yêu cầu tư vấn tour, hỗ trợ đặt tour hoặc hỏi thêm
+                về chương trình khuyến mãi.
+            </span>
+        </div>
+    </section>
+
+    <section class="service-container">
+        <div class="contact-layout">
+            <div class="contact-form-box">
+                <h2>Gửi yêu cầu tư vấn</h2>
+
+                <form class="contact-form">
+                    <label>Họ và tên</label>
+                    <input type="text" placeholder="Nhập họ tên">
+
+                    <label>Email</label>
+                    <input type="email" placeholder="Nhập email">
+
+                    <label>Số điện thoại</label>
+                    <input type="text" placeholder="Nhập số điện thoại">
+
+                    <label>Nội dung cần tư vấn</label>
+                    <textarea rows="6" placeholder="Ví dụ: Tôi muốn tư vấn tour Hàn Quốc tháng 6..."></textarea>
+
+                    <button type="button">Gửi yêu cầu</button>
+                </form>
+            </div>
+
+            <aside class="contact-info-box">
+                <h2>Thông tin liên hệ</h2>
+                <p>Đây là thông tin mẫu cho bài tập lớn. Bạn có thể sửa lại theo nhóm của mình.</p>
+
+                <div class="contact-info-item">
+                    <strong>Email</strong>
+                    <span>support@travelaibooking.vn</span>
+                </div>
+
+                <div class="contact-info-item">
+                    <strong>Hotline</strong>
+                    <span>1900 9999</span>
+                </div>
+
+                <div class="contact-info-item">
+                    <strong>Địa chỉ</strong>
+                    <span>Hà Nội, Việt Nam</span>
+                </div>
+
+                <div class="contact-info-item">
+                    <strong>Thời gian hỗ trợ</strong>
+                    <span>08:00 - 21:00 hằng ngày</span>
+                </div>
+            </aside>
+        </div>
+    </section>
+</main>
+
+{% include 'components/chat_ai.html' %}
+{% include 'components/footer.html' %}
+
+</body>
+</html>

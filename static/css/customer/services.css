@@ -1,0 +1,591 @@
+.service-page {
+    background: #f5f7fb;
+    min-height: 80vh;
+}
+
+.service-hero {
+    min-height: 320px;
+    background:
+        linear-gradient(rgba(15, 23, 42, 0.55), rgba(15, 23, 42, 0.7)),
+        url("../../images/banners/banner-travel.jpg");
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+}
+
+.service-hero-content {
+    max-width: 1200px;
+    width: 100%;
+    margin: auto;
+    padding: 40px 20px;
+    color: #ffffff;
+}
+
+.service-hero-content p {
+    color: #fecdd3;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+.service-hero-content h1 {
+    font-size: 46px;
+    line-height: 1.2;
+    margin-bottom: 14px;
+}
+
+.service-hero-content span {
+    color: #e2e8f0;
+    font-size: 18px;
+    line-height: 1.7;
+    max-width: 720px;
+    display: block;
+}
+
+.service-container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 50px 20px 70px;
+}
+
+.section-heading {
+    text-align: center;
+    margin-bottom: 34px;
+}
+
+.section-heading p {
+    color: #e11d48;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.section-heading h2 {
+    color: #0f172a;
+    font-size: 34px;
+    margin-bottom: 8px;
+}
+
+.section-heading span {
+    color: #64748b;
+}
+
+.service-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.service-item-card {
+    background: #ffffff;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+    transition: 0.3s;
+}
+
+.service-item-card:hover {
+    transform: translateY(-6px);
+}
+
+.service-item-card img {
+    width: 100%;
+    height: 210px;
+    object-fit: cover;
+    background: #e2e8f0;
+}
+
+.service-item-content {
+    padding: 22px;
+}
+
+.service-item-content h3 {
+    color: #0f172a;
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+.service-item-content p {
+    color: #64748b;
+    line-height: 1.7;
+    margin-bottom: 14px;
+}
+
+.service-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 18px;
+}
+
+.service-meta span {
+    background: #f1f5f9;
+    color: #334155;
+    padding: 7px 10px;
+    border-radius: 999px;
+    font-size: 13px;
+}
+
+.service-price {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.service-price strong {
+    color: #e11d48;
+    font-size: 22px;
+}
+
+.service-price a {
+    background: #e11d48;
+    color: #ffffff;
+    padding: 10px 14px;
+    border-radius: 999px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.ai-layout {
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    gap: 26px;
+    align-items: start;
+}
+
+.ai-form-box,
+.ai-result-box,
+.contact-form-box,
+.contact-info-box {
+    background: #ffffff;
+    border-radius: 26px;
+    padding: 26px;
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+}
+
+.ai-form-box h2,
+.ai-result-box h2,
+.contact-form-box h2,
+.contact-info-box h2 {
+    color: #0f172a;
+    margin-bottom: 14px;
+}
+
+.ai-form-box p,
+.ai-result-box p,
+.contact-info-box p {
+    color: #64748b;
+    line-height: 1.7;
+    margin-bottom: 18px;
+}
+
+.ai-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.ai-form label,
+.contact-form label {
+    font-weight: bold;
+    color: #334155;
+}
+
+.ai-form input,
+.ai-form select,
+.ai-form textarea,
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    border: 1px solid #e5e7eb;
+    background: #f9fafb;
+    padding: 13px;
+    border-radius: 14px;
+    outline: none;
+    font-size: 15px;
+}
+
+.ai-form button,
+.contact-form button {
+    border: none;
+    background: #e11d48;
+    color: #ffffff;
+    padding: 14px;
+    border-radius: 999px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.suggest-card {
+    background: #f8fafc;
+    padding: 18px;
+    border-radius: 18px;
+    margin-bottom: 14px;
+}
+
+.suggest-card h3 {
+    color: #e11d48;
+    margin-bottom: 8px;
+}
+
+.suggest-card p {
+    margin-bottom: 10px;
+}
+
+.promotion-card {
+    background: linear-gradient(135deg, #be123c, #e11d48);
+    color: #ffffff;
+    border-radius: 26px;
+    padding: 28px;
+    box-shadow: 0 12px 28px rgba(225, 29, 72, 0.22);
+}
+
+.promotion-card h3 {
+    font-size: 26px;
+    margin-bottom: 12px;
+}
+
+.promotion-card p {
+    color: #ffe4e6;
+    line-height: 1.7;
+    margin-bottom: 18px;
+}
+
+.promotion-code {
+    background: #ffffff;
+    color: #e11d48;
+    width: fit-content;
+    padding: 10px 14px;
+    border-radius: 999px;
+    font-weight: bold;
+}
+
+.contact-layout {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 26px;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.contact-info-item {
+    background: #f8fafc;
+    padding: 16px;
+    border-radius: 16px;
+    margin-bottom: 12px;
+}
+
+.contact-info-item strong {
+    display: block;
+    color: #0f172a;
+    margin-bottom: 6px;
+}
+
+.contact-info-item span {
+    color: #64748b;
+}
+
+@media (max-width: 992px) {
+    .service-grid-3,
+    .ai-layout,
+    .contact-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .service-hero-content h1 {
+        font-size: 38px;
+    }
+}
+
+@media (max-width: 576px) {
+    .service-hero-content h1 {
+        font-size: 32px;
+    }
+
+    .section-heading h2 {
+        font-size: 28px;
+    }
+
+    .service-price {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+    }
+}
+/* ================= TRANG KHUYẾN MÃI ================= */
+
+.promotion-use-btn {
+    display: inline-block;
+    margin-top: 18px;
+    background: #ffffff;
+    color: #e11d48;
+    padding: 11px 16px;
+    border-radius: 999px;
+    font-weight: bold;
+}
+
+.promotion-use-btn:hover {
+    background: #fff1f2;
+}
+
+.empty-promotion-box {
+    grid-column: 1 / -1;
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 36px;
+    text-align: center;
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+}
+
+.empty-promotion-box h3 {
+    color: #0f172a;
+    margin-bottom: 10px;
+}
+
+.empty-promotion-box p {
+    color: #64748b;
+}
+/* ================= AI TƯ VẤN TOUR ================= */
+
+.ai-page {
+    background: #f5f7fb;
+}
+
+.ai-hero {
+    min-height: 280px;
+    background:
+        linear-gradient(rgba(15, 23, 42, 0.65), rgba(15, 23, 42, 0.65)),
+        url("../../images/banners/banner-travel.jpg");
+    background-size: cover;
+    background-position: center;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+}
+
+.ai-hero > div {
+    max-width: 1200px;
+    width: 100%;
+    margin: auto;
+    padding: 40px 20px;
+}
+
+.ai-hero p {
+    color: #fecdd3;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+.ai-hero h1 {
+    font-size: 46px;
+    max-width: 720px;
+    margin-bottom: 14px;
+}
+
+.ai-hero span {
+    display: block;
+    max-width: 720px;
+    line-height: 1.7;
+    color: #f8fafc;
+    font-size: 18px;
+}
+
+.ai-consultant-layout {
+    max-width: 1200px;
+    margin: -50px auto 70px;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 26px;
+    align-items: start;
+}
+
+.ai-form-card,
+.ai-result-card {
+    background: #ffffff;
+    border-radius: 28px;
+    padding: 28px;
+    box-shadow: 0 14px 32px rgba(15, 23, 42, 0.08);
+}
+
+.ai-form-card h2,
+.ai-result-card h2 {
+    color: #0f172a;
+    font-size: 28px;
+    margin-bottom: 12px;
+}
+
+.ai-form-card p {
+    color: #64748b;
+    line-height: 1.7;
+    margin-bottom: 22px;
+}
+
+.ai-consultant-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.ai-consultant-form .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.ai-consultant-form label {
+    font-weight: bold;
+    color: #0f172a;
+}
+
+.ai-consultant-form input,
+.ai-consultant-form select {
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 14px 16px;
+    outline: none;
+    font-size: 15px;
+}
+
+.ai-consultant-form input:focus,
+.ai-consultant-form select:focus {
+    border-color: #e11d48;
+}
+
+.ai-consultant-form small {
+    color: #64748b;
+}
+
+.ai-submit-btn {
+    margin-top: 8px;
+    border: none;
+    background: #e11d48;
+    color: #ffffff;
+    padding: 15px;
+    border-radius: 999px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.ai-message-box {
+    background: #fff1f2;
+    color: #be123c;
+    border-radius: 18px;
+    padding: 16px;
+    line-height: 1.7;
+    margin-bottom: 20px;
+}
+
+.ai-tour-list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.ai-tour-card {
+    display: grid;
+    grid-template-columns: 210px 1fr;
+    gap: 18px;
+    background: #f8fafc;
+    border-radius: 22px;
+    padding: 16px;
+}
+
+.ai-tour-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 18px;
+}
+
+.ai-tour-info h3 {
+    color: #0f172a;
+    font-size: 22px;
+    margin-bottom: 8px;
+}
+
+.ai-tour-info p {
+    color: #475569;
+    margin-bottom: 7px;
+}
+
+.ai-reason-box {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 13px;
+    margin: 12px 0;
+    color: #475569;
+    line-height: 1.6;
+}
+
+.ai-reason-box b {
+    color: #e11d48;
+}
+
+.ai-reason-box span {
+    display: block;
+    margin-top: 4px;
+}
+
+.ai-tour-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.ai-tour-bottom strong {
+    color: #e11d48;
+    font-size: 22px;
+}
+
+.ai-tour-bottom div {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.ai-tour-bottom a {
+    display: inline-block;
+    background: #e2e8f0;
+    color: #0f172a;
+    padding: 10px 14px;
+    border-radius: 999px;
+    font-weight: bold;
+}
+
+.ai-tour-bottom .book-ai-btn {
+    background: #e11d48;
+    color: #ffffff;
+}
+
+@media (max-width: 992px) {
+    .ai-consultant-layout {
+        grid-template-columns: 1fr;
+        margin-top: -30px;
+    }
+}
+
+@media (max-width: 576px) {
+    .ai-hero h1 {
+        font-size: 34px;
+    }
+
+    .ai-tour-card {
+        grid-template-columns: 1fr;
+    }
+
+    .ai-tour-card img {
+        height: 220px;
+    }
+}

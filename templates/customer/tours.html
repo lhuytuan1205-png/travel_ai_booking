@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh sách tour - TravelAI Booking</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/customer/components.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/customer/tours.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/customer/responsive.css') }}">
+</head>
+<body>
+
+    <!-- HEADER -->
+    {% include 'components/header.html' %}
+
+    <!-- BANNER NHỎ -->
+    <section class="page-banner">
+        <div>
+            <p>TravelAI Booking</p>
+            <h1>Danh sách tour du lịch</h1>
+            <span>Tìm tour phù hợp với ngân sách, thời gian và điểm đến của bạn.</span>
+        </div>
+    </section>
+
+    <!-- NỘI DUNG CHÍNH -->
+    <main class="tour-page">
+
+        <!-- BỘ LỌC BÊN TRÁI -->
+        <aside class="filter-box">
+            <h2>Bộ lọc tìm kiếm</h2>
+
+            <form action="/tours" method="GET">
+                <div class="filter-group">
+                    <label>Từ ngày</label>
+                    <input type="date" name="start_date" value="{{ start_date }}">
+                </div>
+
+                <div class="filter-group">
+                    <label>Đến ngày</label>
+                    <input type="date" name="end_date" value="{{ end_date }}">
+                </div>
+                <div class="filter-group">
+                    <label>Từ khóa</label>
+                    <input type="text" name="keyword" placeholder="Tên tour, mô tả..." value="{{ keyword }}">
+                </div>
+
+                <div class="filter-group">
+                    <label>Điểm đến</label>
+                    <select name="destination">
+                        <option value="">Tất cả điểm đến</option>
+
+                        {% for item in destinations %}
+                            <option value="{{ item[0] }}" {% if destination == item[0] %}selected{% endif %}>
+                                {{ item[0] }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label>Giá thấp nhất</label>
+                    <input type="number" name="min_price" placeholder="Ví dụ: 3000000" value="{{ min_price }}">
+                </div>
+
+                <div class="filter-group">
+                    <label>Giá cao nhất</label>
+                    <input type="number" name="max_price" placeholder="Ví dụ: 20000000" value="{{ max_price }}">
+                </div>
+
+                <button type="submit" class="filter-btn">Lọc tour</button>
+                <a href="/tours" class="reset-btn">Xóa bộ lọc</a>
+            </form>
+
+            <div class="ai-suggest-box">
+                <h3>🤖 AI gợi ý</h3>
+                <p>
+                    Sau này AI sẽ dựa vào ngân sách, sở thích và thời gian của khách
+                    để gợi ý tour phù hợp nhất.
+                </p>
+            </div>
+        </aside>
+
+        <!-- DANH SÁCH TOUR BÊN PHẢI -->
+        <section class="tour-list-area">
+            <div class="list-header">
+                <div>
+                    <h2>Tour đang mở bán</h2>
+                    <p>Tìm thấy {{ tours|length }} tour phù hợp</p>
+                </div>
+
+                <div class="sort-box">
+                    <form method="GET" action="/tours" class="sort-form">
+
+                        <input type="hidden" name="keyword" value="{{ keyword }}">
+                        <input type="hidden" name="destination" value="{{ destination }}">
+                        <input type="hidden" name="min_price" value="{{ min_price }}">
+                        <input type="hidden" name="max_price" value="{{ max_price }}">
+                        <input type="hidden" name="start_date" value="{{ start_date }}">
+                        <input type="hidden" name="end_date" value="{{ end_date }}">
+
+                        <label>Sắp xếp:</label>
+
+                        <select name="sort" onchange="this.form.submit()">
+                            <option value="" {% if sort == "" %}selected{% endif %}>
+                                Mặc định
+                            </option>
+
+                            <option value="price_asc" {% if sort == "price_asc" %}selected{% endif %}>
+                                Giá thấp đến cao
+                            </option>
+
+                            <option value="price_desc" {% if sort == "price_desc" %}selected{% endif %}>
+                                Giá cao đến thấp
+                            </option>
+
+                            <option value="date_asc" {% if sort == "date_asc" %}selected{% endif %}>
+                                Ngày khởi hành gần nhất
+                            </option>
+
+                            <option value="date_desc" {% if sort == "date_desc" %}selected{% endif %}>
+                                Ngày khởi hành xa nhất
+                            </option>
+                        </select>
+
+                    </form>
+                </div>
+            </div>
+
+            {% if tours %}
+                <div class="tour-list">
+                    {% for tour in tours %}
+                        <div class="tour-card">
+                            <div class="tour-image">
+                                <img src="{{ url_for('static', filename='images/tours/' + tour[8]) }}" alt="{{ tour[1] }}">
+                                <span class="badge">Giá tốt</span>
+                            </div>
+
+                            <div class="tour-content">
+                                <div class="tour-main-info">
+                                    <h3>{{ tour[1] }}</h3>
+
+                                    <p class="description">
+                                        {{ tour[3] }}
+                                    </p>
+
+                                    <div class="tour-meta">
+                                        <span>📍 {{ tour[2] }}</span>
+                                        <span>⏱ {{ tour[6] }}</span>
+                                        <span>📅 {{ tour[7] }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="tour-price-box">
+                                    <p>Giá từ</p>
+                                    <strong>{{ "{:,.0f}".format(tour[5]) }}đ</strong>
+                                    <span>/ khách</span>
+
+                                    <a href="/tour/{{ tour[0] }}" class="detail-btn">Xem chi tiết</a>
+
+                                    {% if session.get("user_id") %}
+                                        <a href="/booking/{{ tour[0] }}" class="book-btn">Đặt tour</a>
+                                    {% else %}
+                                        <a href="{{ url_for('login', next='/booking/' ~ tour[0]) }}" class="book-btn">
+                                            Đăng nhập để đặt
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="empty-box">
+                    <h3>Không tìm thấy tour phù hợp</h3>
+                    <p>Bạn hãy thử thay đổi từ khóa, điểm đến hoặc khoảng giá.</p>
+                    <a href="/tours">Xem tất cả tour</a>
+                </div>
+            {% endif %}
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    {% include 'components/chat_ai.html' %}
+    {% include 'components/footer.html' %}
+    <script>
+    const startDateInput = document.querySelector('input[name="start_date"]');
+    const endDateInput = document.querySelector('input[name="end_date"]');
+
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, "0");
+    const dd = String(today.getDate()).padStart(2, "0");
+    const todayText = `${yyyy}-${mm}-${dd}`;
+
+    if (startDateInput) {
+        startDateInput.min = todayText;
+    }
+
+    if (endDateInput) {
+        endDateInput.min = todayText;
+    }
+
+    if (startDateInput && endDateInput) {
+        startDateInput.addEventListener("change", function() {
+            endDateInput.min = startDateInput.value;
+
+            if (endDateInput.value && endDateInput.value < startDateInput.value) {
+                endDateInput.value = startDateInput.value;
+            }
+        });
+    }
+</script>
+
+</body>
+</html>

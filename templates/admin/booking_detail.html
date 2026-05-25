@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Chi tiết đơn đặt tour - TravelAI Booking</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin/admin.css') }}">
+</head>
+<body>
+
+<div class="admin-layout">
+
+    <aside class="sidebar">
+        <div class="admin-logo">
+            <h2>TravelAI</h2>
+            <p>Admin Panel</p>
+        </div>
+
+        <nav class="admin-menu">
+            <a href="/admin/dashboard" class="active">Tổng quan</a>
+            <a href="/admin/tours">Quản lý tour</a>
+            <a href="/admin/bookings">Quản lý đơn</a>
+            <a href="/admin/banners">Quản lý banner</a>
+            <a href="/admin/promotions">Quản lý khuyến mãi</a>
+            <a href="/admin/users">Người dùng</a>
+            <a href="/">Về website</a>
+            <a href="/logout">Đăng xuất</a>
+        </nav>
+    </aside>
+
+    <main class="admin-content">
+
+        <div class="admin-topbar">
+            <div>
+                <h1>Chi tiết đơn đặt tour #{{ booking[0] }}</h1>
+                <p>Kiểm tra kỹ thông tin trước khi xác nhận hoặc hủy đơn.</p>
+            </div>
+
+            <div class="topbar-actions">
+                <a href="/admin/bookings" class="secondary">Quay lại quản lý đơn</a>
+                <a href="/admin/dashboard" class="secondary">Dashboard</a>
+            </div>
+        </div>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="flash-box">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <section class="booking-detail-layout">
+
+            <div class="admin-card">
+                <h2>Thông tin khách đặt</h2>
+
+                <div class="detail-info-grid">
+                    <div>
+                        <span>Họ tên người đặt</span>
+                        <strong>{{ booking[1] }}</strong>
+                    </div>
+
+                    <div>
+                        <span>Email</span>
+                        <strong>{{ booking[2] }}</strong>
+                    </div>
+
+                    <div>
+                        <span>Số điện thoại</span>
+                        <strong>{{ booking[3] }}</strong>
+                    </div>
+
+                    <div>
+                        <span>Số lượng khách</span>
+                        <strong>{{ booking[4] }} khách</strong>
+                    </div>
+
+                    <div>
+                        <span>Tài khoản đăng nhập</span>
+                        <strong>{{ booking[18] }}</strong>
+                    </div>
+
+                    <div>
+                        <span>Email tài khoản</span>
+                        <strong>{{ booking[19] }}</strong>
+                    </div>
+
+                    <div>
+                        <span>Ngày đặt</span>
+                        <strong>{{ booking[8] }}</strong>
+                    </div>
+
+                    <div>
+                        <span>Trạng thái</span>
+                        {% if booking[7] == "pending" %}
+                            <strong class="text-pending">Chờ xác nhận</strong>
+                        {% elif booking[7] == "confirmed" %}
+                            <strong class="text-confirmed">Đã xác nhận</strong>
+                        {% else %}
+                            <strong class="text-cancelled">Đã hủy</strong>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="detail-note-box">
+                    <h3>Ghi chú của khách</h3>
+                    {% if booking[5] %}
+                        <p>{{ booking[5] }}</p>
+                    {% else %}
+                        <p>Khách không để lại ghi chú.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <aside class="admin-card">
+                <h2>Thông tin tour</h2>
+
+                <img class="booking-detail-tour-img"
+                     src="{{ url_for('static', filename='images/tours/' + booking[17]) }}"
+                     alt="{{ booking[10] }}">
+
+                <div class="detail-tour-info">
+                    <p><b>Tên tour:</b> {{ booking[10] }}</p>
+                    <p><b>Điểm đến:</b> {{ booking[11] }}</p>
+                    <p><b>Thời gian:</b> {{ booking[15] }}</p>
+                    <p><b>Ngày khởi hành:</b> {{ booking[16] }}</p>
+                    <p><b>Giá / khách:</b> {{ "{:,.0f}".format(booking[14]) }}đ</p>
+                    <p><b>Tổng tiền:</b> <span class="detail-total-price">{{ "{:,.0f}".format(booking[6]) }}đ</span></p>
+                </div>
+
+                <div class="booking-detail-actions">
+                        
+                    {% if booking[7] != "confirmed" %}
+                        <a href="{{ url_for('admin_confirm_booking', booking_id=booking[0]) }}"
+                           class="confirm-big-btn"
+                           onclick="return confirm('Bạn đã kiểm tra kỹ và muốn xác nhận đơn này?')">
+                            Xác nhận đơn
+                        </a>
+                    {% endif %}
+
+                    {% if booking[7] != "cancelled" %}
+                        <a href="{{ url_for('admin_cancel_booking', booking_id=booking[0]) }}"
+                           class="cancel-big-btn"
+                           onclick="return confirm('Bạn có chắc muốn hủy đơn này?')">
+                            Hủy đơn
+                        </a>
+                    {% endif %}
+                </div>
+            </aside>
+
+        </section>
+
+        <section class="admin-card detail-tour-description">
+            <h2>Mô tả tour</h2>
+            <p>{{ booking[12] }}</p>
+
+            <h2>Lịch trình tour</h2>
+            <p>{{ booking[13] }}</p>
+        </section>
+
+    </main>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý đơn đặt tour - TravelAI Booking</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin/admin.css') }}">
+</head>
+<body>
+
+<div class="admin-layout">
+
+    <aside class="sidebar">
+        <div class="admin-logo">
+            <h2>TravelAI</h2>
+            <p>Admin Panel</p>
+        </div>
+
+        <nav class="admin-menu">
+            <a href="/admin/dashboard">Tổng quan</a>
+            <a href="/admin/tours">Quản lý tour</a>
+            <a href="/admin/bookings" class="active">Quản lý đơn</a>
+            <a href="/admin/banners">Quản lý banner</a>
+            <a href="/admin/promotions">Quản lý khuyến mãi</a>
+            <a href="/admin/users">Người dùng</a>
+            <a href="/">Về website</a>
+            <a href="/logout">Đăng xuất</a>
+        </nav>
+    </aside>
+
+    <main class="admin-content">
+        <div class="admin-topbar">
+            <div>
+                <h1>Quản lý đơn đặt tour</h1>
+                <p>Theo dõi, xác nhận hoặc hủy các đơn khách hàng đã đặt.</p>
+            </div>
+
+            <div class="topbar-actions">
+                <a href="/admin/dashboard" class="secondary">Tổng quan</a>
+            </div>
+        </div>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="flash-box">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <section class="admin-card">
+            <form class="admin-filter-form" method="GET" action="/admin/bookings">
+                <div class="filter-item">
+                    <label>Tìm kiếm</label>
+                    <input
+                        type="text"
+                        name="keyword"
+                        placeholder="Tên khách, email, SĐT hoặc tên tour..."
+                        value="{{ keyword }}"
+                    >
+                </div>
+
+                <div class="filter-item">
+                    <label>Trạng thái đơn</label>
+                    <select name="status">
+                        <option value="">Tất cả trạng thái</option>
+                        <option value="pending" {% if status == "pending" %}selected{% endif %}>Chờ xác nhận</option>
+                        <option value="confirmed" {% if status == "confirmed" %}selected{% endif %}>Đã xác nhận</option>
+                        <option value="cancelled" {% if status == "cancelled" %}selected{% endif %}>Đã hủy</option>
+                    </select>
+                </div>
+
+                <div class="filter-actions">
+                    <button type="submit">Tìm kiếm</button>
+                    <a href="/admin/bookings">Xóa lọc</a>
+                </div>
+            </form>
+            <div class="table-wrapper">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Mã đơn</th>
+                            <th>Khách đặt</th>
+                            <th>Liên hệ</th>
+                            <th>Tour</th>
+                            <th>Số khách</th>
+                            <th>Tổng tiền</th>
+                            <th>Trạng thái</th>
+                            <th>Ngày đặt</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% if bookings %}
+                            {% for booking in bookings %}
+                                <tr>
+                                    <td>#{{ booking[0] }}</td>
+
+                                    <td>
+                                        <b>{{ booking[1] }}</b>
+                                        <br>
+                                        <small>Tài khoản: {{ booking[12] }}</small>
+                                    </td>
+
+                                    <td>
+                                        {{ booking[2] }}
+                                        <br>
+                                        {{ booking[3] }}
+                                    </td>
+
+                                    <td>
+                                        <b>{{ booking[8] }}</b>
+                                        <br>
+                                        <small>
+                                            📍 {{ booking[9] }} |
+                                            ⏱ {{ booking[10] }} |
+                                            📅 {{ booking[11] }}
+                                        </small>
+                                    </td>
+
+                                    <td>{{ booking[4] }}</td>
+
+                                    <td>
+                                        <b>{{ "{:,.0f}".format(booking[5]) }}đ</b>
+                                    </td>
+
+                                    <td>
+                                        {% if booking[6] == "pending" %}
+                                            <span class="status pending">Chờ xác nhận</span>
+                                        {% elif booking[6] == "confirmed" %}
+                                            <span class="status active">Đã xác nhận</span>
+                                        {% elif booking[6] == "cancelled" %}
+                                            <span class="status inactive">Đã hủy</span>
+                                        {% endif %}
+                                    </td>
+
+                                    <td>{{ booking[7] }}</td>
+
+                                    <td>
+                                        <div class="action-group">
+                                            <a href="{{ url_for('admin_booking_detail', booking_id=booking[0]) }}"
+                                            class="view-btn">
+                                                Xem
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="9">Chưa có đơn đặt tour nào.</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+            {% if total_pages > 1 %}
+                <div class="pagination">
+                    {% if page > 1 %}
+                        <a href="{{ url_for('admin_manage_bookings', page=page-1, keyword=keyword, status=status) }}">
+                            « Trước
+                        </a>
+                    {% endif %}
+
+                    {% for p in range(1, total_pages + 1) %}
+                        <a href="{{ url_for('admin_manage_bookings', page=p, keyword=keyword, status=status) }}"
+                        class="{% if p == page %}active{% endif %}">
+                            {{ p }}
+                        </a>
+                    {% endfor %}
+
+                    {% if page < total_pages %}
+                        <a href="{{ url_for('admin_manage_bookings', page=page+1, keyword=keyword, status=status) }}">
+                            Sau »
+                        </a>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </section>
+    </main>
+
+</div>
+
+</body>
+</html>

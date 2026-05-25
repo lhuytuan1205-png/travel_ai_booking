@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Tài khoản của tôi - TravelAI Booking</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/customer/components.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/customer/tours.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/customer/profile.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/customer/responsive.css') }}">
+</head>
+<body>
+
+{% include 'components/header.html' %}
+
+<main class="profile-page">
+
+    <section class="profile-title">
+        <p>TravelAI Booking</p>
+        <h1>Tài khoản của tôi</h1>
+        <span>Quản lý thông tin cá nhân và theo dõi hoạt động đặt tour.</span>
+    </section>
+
+    <section class="account-layout">
+
+        <div class="account-card">
+            <div class="avatar-box">
+                <div class="avatar-circle">
+                    {{ user[1][0] }}
+                </div>
+
+                <div>
+                    <h2>{{ user[1] }}</h2>
+                    <p>{{ user[2] }}</p>
+                </div>
+            </div>
+
+            <div class="account-info">
+                <div class="info-row">
+                    <span>Mã tài khoản</span>
+                    <strong>#{{ user[0] }}</strong>
+                </div>
+
+                <div class="info-row">
+                    <span>Họ và tên</span>
+                    <strong>{{ user[1] }}</strong>
+                </div>
+
+                <div class="info-row">
+                    <span>Email</span>
+                    <strong>{{ user[2] }}</strong>
+                </div>
+
+                <div class="info-row">
+                    <span>Số điện thoại</span>
+                    <strong>{{ user[3] }}</strong>
+                </div>
+
+                <div class="info-row">
+                    <span>Quyền tài khoản</span>
+                    {% if user[4] == "admin" %}
+                        <strong class="role-admin">Admin</strong>
+                    {% else %}
+                        <strong class="role-customer">Customer</strong>
+                    {% endif %}
+                </div>
+
+                <div class="info-row">
+                    <span>Ngày tạo tài khoản</span>
+                    <strong>{{ user[5] }}</strong>
+                </div>
+            </div>
+        </div>
+
+        <aside class="account-side">
+            <div class="side-card">
+                <h3>Chức năng nhanh</h3>
+
+                <a href="/my-bookings">Xem đơn đặt tour của tôi</a>
+                <a href="/tours">Tiếp tục xem tour</a>
+                <a href="/ai-consultant">Nhờ AI tư vấn tour</a>
+
+                {% if session.get("role") == "admin" %}
+                    <a href="/admin/dashboard">Vào trang quản trị</a>
+                {% endif %}
+            </div>
+
+            <div class="side-card note">
+                <h3>Gợi ý nâng cấp sau</h3>
+                <p>
+                    Sau này có thể thêm chức năng sửa thông tin cá nhân,
+                    đổi mật khẩu và cập nhật ảnh đại diện.
+                </p>
+            </div>
+        </aside>
+
+    </section>
+
+</main>
+
+{% include 'components/chat_ai.html' %}
+{% include 'components/footer.html' %}
+
+</body>
+</html>

@@ -1,0 +1,42 @@
+<header class="main-header">
+    <div class="header-top">
+        <a href="/" class="logo">
+            <span class="logo-icon">✈</span>
+            <div>
+                <h2>TravelAI</h2>
+                <p>Booking</p>
+            </div>
+        </a>
+
+        <form class="header-search" action="/tours" method="GET">
+            <input type="text" name="keyword" placeholder="Bạn muốn đi đâu?">
+            <button type="submit">Tìm kiếm</button>
+        </form>
+
+        <div class="header-actions">
+            {% if session.get("user_id") %}
+                <span class="hello-user">Xin chào, {{ session.get("full_name") }}</span>
+
+                <a href="/my-bookings" class="login-btn" >Đơn của tôi</a>
+                <a href="/profile" class="login-btn" >Tài khoản</a>
+
+                {% if session.get("role") == "admin" %}
+                    <a href="/admin" class="admin-link">Admin</a>
+                {% endif %}
+
+                <a href="/logout" class="login-btn" >Đăng xuất</a>
+            {% else %}
+                <a href="/login" class="login-btn" >👤 Đăng nhập</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <nav class="main-nav">
+        <a href="/">Trang chủ</a>
+        <a href="/tours">Tour trọn gói</a>
+        <a href="/ai-consultant">AI tư vấn</a>
+        <a href="/combos">Combo du lịch</a>
+        <a href="/promotions">Khuyến mãi</a>
+        <a href="/contact">Liên hệ</a>
+    </nav>
+</header>

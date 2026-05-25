@@ -1,0 +1,493 @@
+.profile-page {
+    max-width: 1200px;
+    margin: auto;
+    padding: 40px 20px 70px;
+}
+
+.profile-title {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.profile-title p {
+    color: #e11d48;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.profile-title h1 {
+    color: #0f172a;
+    font-size: 38px;
+    margin: 8px 0;
+}
+
+.profile-title span {
+    color: #64748b;
+}
+
+.booking-history {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.history-card {
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 24px;
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+}
+
+.history-main {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.order-code {
+    color: #e11d48;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.history-main h2 {
+    color: #0f172a;
+    font-size: 24px;
+    margin-bottom: 14px;
+}
+
+.history-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.history-meta span {
+    background: #f1f5f9;
+    color: #334155;
+    padding: 8px 10px;
+    border-radius: 999px;
+    font-size: 14px;
+}
+
+.history-price {
+    min-width: 180px;
+    text-align: right;
+}
+
+.history-price p {
+    color: #64748b;
+    margin-bottom: 4px;
+}
+
+.history-price strong {
+    color: #e11d48;
+    font-size: 24px;
+    display: block;
+    margin-bottom: 12px;
+}
+
+.status {
+    display: inline-block;
+    padding: 8px 12px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.status.pending {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.status.confirmed {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.status.cancelled {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.history-footer {
+    border-top: 1px solid #e5e7eb;
+    margin-top: 20px;
+    padding-top: 16px;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.history-footer span {
+    color: #64748b;
+}
+
+.history-footer a {
+    color: #e11d48;
+    font-weight: bold;
+}
+
+.empty-history {
+    background: #ffffff;
+    text-align: center;
+    padding: 50px 24px;
+    border-radius: 28px;
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+}
+
+.empty-history h2 {
+    color: #0f172a;
+    margin-bottom: 10px;
+}
+
+.empty-history p {
+    color: #64748b;
+    margin-bottom: 24px;
+}
+
+.empty-history a {
+    background: #e11d48;
+    color: #ffffff;
+    padding: 13px 24px;
+    border-radius: 999px;
+    font-weight: bold;
+}
+.account-layout {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 26px;
+}
+
+.account-card,
+.side-card {
+    background: #ffffff;
+    border-radius: 26px;
+    padding: 26px;
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+}
+
+.avatar-box {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid #e5e7eb;
+    margin-bottom: 22px;
+}
+
+.avatar-circle {
+    width: 76px;
+    height: 76px;
+    background: #e11d48;
+    color: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 34px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.avatar-box h2 {
+    color: #0f172a;
+    margin-bottom: 6px;
+}
+
+.avatar-box p {
+    color: #64748b;
+}
+
+.account-info {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.info-row {
+    background: #f8fafc;
+    border-radius: 16px;
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: center;
+}
+
+.info-row span {
+    color: #64748b;
+}
+
+.info-row strong {
+    color: #0f172a;
+    text-align: right;
+}
+
+.role-admin {
+    color: #e11d48 !important;
+}
+
+.role-customer {
+    color: #166534 !important;
+}
+
+.account-side {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.side-card h3 {
+    color: #0f172a;
+    margin-bottom: 16px;
+}
+
+.side-card a {
+    display: block;
+    background: #f8fafc;
+    color: #334155;
+    padding: 13px 14px;
+    border-radius: 14px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.side-card a:hover {
+    background: #e11d48;
+    color: #ffffff;
+}
+
+.side-card.note {
+    background: #fff1f2;
+}
+
+.side-card.note h3 {
+    color: #be123c;
+}
+
+.side-card.note p {
+    color: #64748b;
+    line-height: 1.7;
+}
+.old-price {
+    color: #64748b;
+    text-decoration: line-through;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.discount-small {
+    color: #16a34a;
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+/* ================= NÚT XEM CHI TIẾT ĐƠN ================= */
+
+.history-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+}
+
+.view-detail-booking-btn,
+.book-more-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 11px 16px;
+    border-radius: 999px;
+    font-weight: bold;
+}
+
+.view-detail-booking-btn {
+    background: #e0f2fe;
+    color: #075985;
+}
+
+.book-more-btn {
+    background: #fff1f2;
+    color: #e11d48;
+}
+
+/* ================= CHI TIẾT ĐƠN CỦA KHÁCH ================= */
+
+.customer-booking-detail {
+    max-width: 1180px;
+    margin: auto;
+    padding: 30px 20px 70px;
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 24px;
+    align-items: start;
+}
+
+.customer-detail-left {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.customer-detail-card,
+.customer-tour-box {
+    background: #ffffff;
+    border-radius: 26px;
+    padding: 24px;
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+}
+
+.customer-detail-card h2,
+.customer-tour-box h2 {
+    color: #0f172a;
+    margin-bottom: 18px;
+}
+
+.customer-detail-grid,
+.customer-price-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+}
+
+.customer-detail-grid div,
+.customer-price-grid div {
+    background: #f8fafc;
+    border-radius: 16px;
+    padding: 15px;
+}
+
+.customer-detail-grid span,
+.customer-price-grid span {
+    display: block;
+    color: #64748b;
+    font-size: 14px;
+    margin-bottom: 7px;
+}
+
+.customer-detail-grid strong,
+.customer-price-grid strong {
+    color: #0f172a;
+    word-break: break-word;
+}
+
+.status-text.pending {
+    color: #92400e;
+}
+
+.status-text.confirmed {
+    color: #166534;
+}
+
+.status-text.cancelled {
+    color: #991b1b;
+}
+
+.customer-note-box {
+    margin-top: 16px;
+    background: #fff1f2;
+    padding: 16px;
+    border-radius: 18px;
+}
+
+.customer-note-box h3 {
+    color: #be123c;
+    margin-bottom: 8px;
+}
+
+.customer-note-box p {
+    color: #64748b;
+    line-height: 1.7;
+}
+
+.discount-text {
+    color: #16a34a !important;
+}
+
+.final-price {
+    color: #e11d48 !important;
+    font-size: 20px;
+}
+
+.customer-tour-box img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 18px;
+    margin-bottom: 18px;
+}
+
+.customer-tour-info {
+    background: #f8fafc;
+    border-radius: 18px;
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.customer-tour-info p {
+    color: #475569;
+    line-height: 1.7;
+    margin-bottom: 8px;
+}
+
+.customer-next-step {
+    background: #fff1f2;
+    border-radius: 18px;
+    padding: 16px;
+    margin-bottom: 18px;
+}
+
+.customer-next-step h3 {
+    color: #be123c;
+    margin-bottom: 8px;
+}
+
+.customer-next-step p {
+    color: #64748b;
+    line-height: 1.7;
+}
+
+.customer-detail-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.primary-action,
+.secondary-action {
+    text-align: center;
+    padding: 13px 16px;
+    border-radius: 999px;
+    font-weight: bold;
+}
+
+.primary-action {
+    background: #e11d48;
+    color: #ffffff;
+}
+
+.secondary-action {
+    background: #f1f5f9;
+    color: #0f172a;
+}
+
+@media (max-width: 992px) {
+    .customer-booking-detail {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 576px) {
+    .customer-detail-grid,
+    .customer-price-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .history-actions {
+        justify-content: flex-start;
+    }
+}

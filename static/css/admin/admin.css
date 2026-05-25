@@ -1,0 +1,973 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f7fb;
+    color: #1f2937;
+}
+
+a {
+    text-decoration: none;
+}
+
+.admin-layout {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    min-height: 100vh;
+}
+
+.sidebar {
+    background: #0f172a;
+    color: #ffffff;
+    padding: 24px 18px;
+}
+
+.admin-logo {
+    margin-bottom: 30px;
+}
+
+.admin-logo h2 {
+    color: #ffffff;
+    font-size: 24px;
+}
+
+.admin-logo p {
+    color: #94a3b8;
+    margin-top: 4px;
+}
+
+.admin-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.admin-menu a {
+    color: #cbd5e1;
+    padding: 12px 14px;
+    border-radius: 12px;
+    font-weight: bold;
+}
+
+.admin-menu a:hover,
+.admin-menu a.active {
+    background: #e11d48;
+    color: #ffffff;
+}
+
+.admin-content {
+    padding: 30px;
+}
+
+.admin-topbar {
+    background: #ffffff;
+    border-radius: 22px;
+    padding: 20px 24px;
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+}
+
+.admin-topbar h1 {
+    color: #0f172a;
+    font-size: 28px;
+}
+
+.admin-topbar p {
+    color: #64748b;
+    margin-top: 4px;
+}
+
+.topbar-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.topbar-actions a,
+.add-btn {
+    background: #e11d48;
+    color: #ffffff;
+    padding: 11px 16px;
+    border-radius: 999px;
+    font-weight: bold;
+}
+
+.topbar-actions a.secondary {
+    background: #f1f5f9;
+    color: #0f172a;
+}
+
+.flash-box {
+    background: #dcfce7;
+    color: #166534;
+    padding: 12px 16px;
+    border-radius: 14px;
+    margin-bottom: 18px;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+}
+
+.stat-card {
+    background: #ffffff;
+    border-radius: 22px;
+    padding: 22px;
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+}
+
+.stat-card span {
+    color: #64748b;
+    font-size: 14px;
+}
+
+.stat-card h2 {
+    color: #e11d48;
+    font-size: 30px;
+    margin: 10px 0;
+}
+
+.stat-card p {
+    color: #94a3b8;
+}
+
+.admin-card {
+    background: #ffffff;
+    border-radius: 22px;
+    padding: 24px;
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+}
+
+.table-wrapper {
+    overflow-x: auto;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 900px;
+}
+
+.admin-table th,
+.admin-table td {
+    padding: 14px;
+    border-bottom: 1px solid #e5e7eb;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.admin-table th {
+    color: #0f172a;
+    background: #f8fafc;
+}
+
+.admin-table td {
+    color: #334155;
+}
+
+.admin-table img {
+    width: 90px;
+    height: 62px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.status {
+    display: inline-block;
+    padding: 7px 11px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.status.active {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.status.inactive {
+    background: #fee2e2;
+    color: #991b1b;
+}
+.status.pending {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.action-group {
+    display: flex;
+    gap: 8px;
+}
+
+.edit-btn,
+.delete-btn {
+    padding: 8px 11px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.edit-btn {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.delete-btn {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.admin-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.form-group.full {
+    grid-column: 1 / -1;
+}
+
+.form-group label {
+    font-weight: bold;
+    color: #334155;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    border: 1px solid #e5e7eb;
+    background: #f9fafb;
+    padding: 13px;
+    border-radius: 14px;
+    outline: none;
+    font-size: 15px;
+}
+
+.form-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.submit-btn {
+    border: none;
+    background: #e11d48;
+    color: #ffffff;
+    padding: 13px 24px;
+    border-radius: 999px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.cancel-btn {
+    background: #f1f5f9;
+    color: #0f172a;
+    padding: 13px 24px;
+    border-radius: 999px;
+    font-weight: bold;
+}
+
+@media (max-width: 992px) {
+    .admin-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+        position: static;
+    }
+
+    .admin-menu {
+        flex-direction: row;
+        overflow-x: auto;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .admin-form {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 576px) {
+    .admin-content {
+        padding: 18px;
+    }
+
+    .admin-topbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .topbar-actions {
+        flex-wrap: wrap;
+    }
+}
+.form-group input[type="file"] {
+    background: #ffffff;
+    cursor: pointer;
+}
+
+.form-group small {
+    color: #64748b;
+    font-size: 13px;
+}
+.gallery-input-item {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.gallery-input-item input[type="file"] {
+    flex: 1;
+}
+
+.add-image-btn {
+    width: fit-content;
+    border: none;
+    background: #0f172a;
+    color: #ffffff;
+    padding: 11px 16px;
+    border-radius: 999px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 6px;
+}
+
+.remove-image-btn {
+    border: none;
+    background: #fee2e2;
+    color: #991b1b;
+    padding: 10px 14px;
+    border-radius: 999px;
+    font-weight: bold;
+    cursor: pointer;
+    white-space: nowrap;
+}
+.form-group input[type="file"] {
+    background: #ffffff;
+    cursor: pointer;
+}
+
+.form-group small {
+    color: #64748b;
+    font-size: 13px;
+}
+
+.gallery-input-item {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.gallery-input-item input[type="file"] {
+    flex: 1;
+}
+
+.add-image-btn {
+    width: fit-content;
+    border: none;
+    background: #0f172a;
+    color: #ffffff;
+    padding: 11px 16px;
+    border-radius: 999px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 6px;
+}
+
+.remove-image-btn {
+    border: none;
+    background: #fee2e2;
+    color: #991b1b;
+    padding: 10px 14px;
+    border-radius: 999px;
+    font-weight: bold;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.admin-gallery-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.admin-gallery-item {
+    background: #f8fafc;
+    border-radius: 16px;
+    padding: 12px;
+    text-align: center;
+}
+
+.admin-gallery-item img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 10px;
+}
+
+.admin-gallery-item a {
+    display: inline-block;
+    background: #fee2e2;
+    color: #991b1b;
+    padding: 8px 12px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.empty-gallery-text {
+    color: #64748b;
+    background: #f8fafc;
+    padding: 14px;
+    border-radius: 14px;
+}
+
+@media (max-width: 992px) {
+    .admin-gallery-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 576px) {
+    .admin-gallery-list {
+        grid-template-columns: 1fr;
+    }
+
+    .gallery-input-item {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+/* ================= ẢNH ĐẠI DIỆN TRONG FORM SỬA TOUR ================= */
+
+.main-image-edit-box {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    background: #f8fafc;
+    padding: 18px;
+    border-radius: 18px;
+}
+
+.new-main-image {
+    order: 1;
+}
+
+.current-main-image {
+    order: 2;
+}
+
+.current-main-image p,
+.new-main-image p {
+    color: #334155;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.current-main-image img {
+    width: 260px;
+    height: 165px;
+    object-fit: cover;
+    border-radius: 14px;
+    box-shadow: 0 8px 18px rgba(15, 23, 42, 0.12);
+}
+
+.new-main-image input[type="file"] {
+    width: 100%;
+    background: #ffffff;
+}
+
+.new-main-image small {
+    display: block;
+    margin-top: 10px;
+    color: #64748b;
+    line-height: 1.5;
+}
+/* ================= DASHBOARD NÂNG CẤP ================= */
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 22px;
+    margin-top: 24px;
+}
+
+.card-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 18px;
+    margin-bottom: 18px;
+}
+
+.card-heading h2 {
+    color: #0f172a;
+    font-size: 22px;
+    margin-bottom: 5px;
+}
+
+.card-heading p {
+    color: #64748b;
+}
+
+.card-heading a {
+    background: #f1f5f9;
+    color: #0f172a;
+    padding: 10px 14px;
+    border-radius: 999px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.dashboard-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.dashboard-list-item {
+    background: #f8fafc;
+    border-radius: 18px;
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+    align-items: center;
+}
+
+.dashboard-list-item h3 {
+    color: #0f172a;
+    font-size: 16px;
+    margin-bottom: 6px;
+}
+
+.dashboard-list-item p {
+    color: #475569;
+    margin-bottom: 5px;
+    line-height: 1.5;
+}
+
+.dashboard-list-item span {
+    color: #64748b;
+    font-size: 14px;
+}
+
+.dashboard-item-right {
+    min-width: 130px;
+    text-align: right;
+}
+
+.dashboard-item-right strong {
+    display: block;
+    color: #e11d48;
+    margin-bottom: 8px;
+}
+
+.mini-edit-btn {
+    display: inline-block;
+    background: #fef3c7;
+    color: #92400e;
+    padding: 8px 12px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+.empty-dashboard-text {
+    color: #64748b;
+    background: #f8fafc;
+    padding: 16px;
+    border-radius: 16px;
+}
+
+@media (max-width: 1100px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 576px) {
+    .dashboard-list-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .dashboard-item-right {
+        text-align: left;
+        min-width: unset;
+    }
+
+    .card-heading {
+        flex-direction: column;
+    }
+}
+/* ================= SỬA NÚT DASHBOARD ================= */
+
+.dashboard-item-right {
+    min-width: 145px;
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+}
+
+.tour-dashboard-actions {
+    justify-content: center;
+}
+
+.dashboard-action-buttons {
+    display: flex;
+    gap: 6px;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+.mini-confirm-btn,
+.mini-cancel-btn,
+.mini-edit-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 72px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.mini-confirm-btn {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.mini-cancel-btn {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.mini-edit-btn {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.dashboard-item-right .status {
+    min-width: 96px;
+    text-align: center;
+}
+
+@media (max-width: 576px) {
+    .dashboard-item-right {
+        align-items: flex-start;
+        text-align: left;
+    }
+
+    .dashboard-action-buttons {
+        justify-content: flex-start;
+    }
+}
+/* ================= CHI TIẾT ĐƠN ADMIN ================= */
+
+.mini-view-btn,
+.view-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #e0f2fe;
+    color: #075985;
+    padding: 8px 12px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.booking-detail-layout {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 24px;
+    align-items: start;
+    margin-bottom: 24px;
+}
+
+.detail-info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+}
+
+.detail-info-grid div {
+    background: #f8fafc;
+    border-radius: 16px;
+    padding: 16px;
+}
+
+.detail-info-grid span {
+    display: block;
+    color: #64748b;
+    font-size: 14px;
+    margin-bottom: 7px;
+}
+
+.detail-info-grid strong {
+    color: #0f172a;
+    word-break: break-word;
+}
+
+.text-pending {
+    color: #92400e !important;
+}
+
+.text-confirmed {
+    color: #166534 !important;
+}
+
+.text-cancelled {
+    color: #991b1b !important;
+}
+
+.detail-note-box {
+    background: #fff1f2;
+    border-radius: 18px;
+    padding: 18px;
+    margin-top: 18px;
+}
+
+.detail-note-box h3 {
+    color: #be123c;
+    margin-bottom: 10px;
+}
+
+.detail-note-box p {
+    color: #64748b;
+    line-height: 1.7;
+}
+
+.booking-detail-tour-img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 18px;
+    margin-bottom: 18px;
+}
+
+.detail-tour-info {
+    background: #f8fafc;
+    border-radius: 18px;
+    padding: 16px;
+}
+
+.detail-tour-info p {
+    color: #475569;
+    margin-bottom: 9px;
+    line-height: 1.6;
+}
+
+.detail-total-price {
+    color: #e11d48;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.booking-detail-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.confirm-big-btn,
+.cancel-big-btn {
+    text-align: center;
+    padding: 13px 16px;
+    border-radius: 999px;
+    font-weight: bold;
+}
+
+.confirm-big-btn {
+    background: #22c55e;
+    color: #ffffff;
+}
+
+.cancel-big-btn {
+    background: #ef4444;
+    color: #ffffff;
+}
+
+.detail-tour-description {
+    margin-top: 10px;
+}
+
+.detail-tour-description h2 {
+    color: #0f172a;
+    margin-bottom: 12px;
+    margin-top: 12px;
+}
+
+.detail-tour-description p {
+    color: #475569;
+    line-height: 1.8;
+    margin-bottom: 14px;
+}
+
+@media (max-width: 992px) {
+    .booking-detail-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 576px) {
+    .detail-info-grid {
+        grid-template-columns: 1fr;
+    }
+}
+/* ================= FORM TÌM KIẾM ADMIN ================= */
+
+.admin-filter-form {
+    background: #f8fafc;
+    border-radius: 20px;
+    padding: 18px;
+    margin-bottom: 22px;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr auto;
+    gap: 14px;
+    align-items: end;
+}
+
+.filter-item {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.filter-item label {
+    font-weight: bold;
+    color: #334155;
+    font-size: 14px;
+}
+
+.filter-item input,
+.filter-item select {
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
+    padding: 12px;
+    border-radius: 14px;
+    outline: none;
+    font-size: 15px;
+}
+
+.filter-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.filter-actions button {
+    border: none;
+    background: #e11d48;
+    color: #ffffff;
+    padding: 12px 16px;
+    border-radius: 999px;
+    font-weight: bold;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.filter-actions a {
+    background: #f1f5f9;
+    color: #0f172a;
+    padding: 12px 16px;
+    border-radius: 999px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+@media (max-width: 1100px) {
+    .admin-filter-form {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 576px) {
+    .admin-filter-form {
+        grid-template-columns: 1fr;
+    }
+
+    .filter-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filter-actions button,
+    .filter-actions a {
+        width: 100%;
+        text-align: center;
+    }
+}
+/* ================= PHÂN TRANG ADMIN ================= */
+
+.pagination {
+    margin-top: 22px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.pagination a {
+    min-width: 40px;
+    text-align: center;
+    padding: 10px 13px;
+    border-radius: 999px;
+    background: #f1f5f9;
+    color: #0f172a;
+    font-weight: bold;
+}
+
+.pagination a:hover,
+.pagination a.active {
+    background: #e11d48;
+    color: #ffffff;
+}
+/* ================= BANNER ADMIN ================= */
+
+.banner-preview-box {
+    background: #f8fafc;
+    padding: 16px;
+    border-radius: 18px;
+}
+
+.banner-preview-box img {
+    width: 100%;
+    max-height: 260px;
+    object-fit: cover;
+    border-radius: 16px;
+}

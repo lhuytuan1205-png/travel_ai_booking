@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Combo du lịch - TravelAI Booking</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/customer/components.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/customer/tours.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/customer/services.css') }}">
+</head>
+<body>
+
+{% include 'components/header.html' %}
+
+<main class="service-page">
+    <section class="service-hero">
+        <div class="service-hero-content">
+            <p>Combo du lịch</p>
+            <h1>Combo tiết kiệm cho chuyến đi</h1>
+            <span>
+                Kết hợp tour, khách sạn và dịch vụ đi kèm giúp khách hàng tiết kiệm chi phí
+                và dễ dàng ra quyết định hơn.
+            </span>
+        </div>
+    </section>
+
+    <section class="service-container">
+        <div class="section-heading">
+            <p>Travel Combos</p>
+            <h2>Combo nổi bật</h2>
+            <span>Các combo mẫu giúp website phong phú và giống trang du lịch chuyên nghiệp.</span>
+        </div>
+
+        <div class="service-grid-3">
+            <div class="service-item-card">
+                <img src="{{ url_for('static', filename='images/tours/da-nang.jpg') }}" alt="Combo Đà Nẵng">
+                <div class="service-item-content">
+                    <h3>Combo Đà Nẵng 4N3Đ</h3>
+                    <p>Bao gồm tour tham quan, khách sạn và hỗ trợ tư vấn lịch trình.</p>
+                    <div class="service-meta">
+                        <span>4 ngày</span>
+                        <span>Khách sạn</span>
+                        <span>Tiết kiệm</span>
+                    </div>
+                    <div class="service-price">
+                        <strong>6,990,000đ</strong>
+                        <a href="/tours">Xem tour</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="service-item-card">
+                <img src="{{ url_for('static', filename='images/tours/phu-quoc.jpg') }}" alt="Combo Phú Quốc">
+                <div class="service-item-content">
+                    <h3>Combo Phú Quốc nghỉ dưỡng</h3>
+                    <p>Phù hợp cho cặp đôi, gia đình muốn nghỉ dưỡng biển đảo.</p>
+                    <div class="service-meta">
+                        <span>3 ngày</span>
+                        <span>Resort</span>
+                        <span>Biển</span>
+                    </div>
+                    <div class="service-price">
+                        <strong>4,990,000đ</strong>
+                        <a href="/tours">Xem tour</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="service-item-card">
+                <img src="{{ url_for('static', filename='images/tours/nhat-ban.jpg') }}" alt="Combo Nhật Bản">
+                <div class="service-item-content">
+                    <h3>Combo Nhật Bản cao cấp</h3>
+                    <p>Gợi ý cho khách muốn du lịch quốc tế, khám phá văn hóa và ẩm thực.</p>
+                    <div class="service-meta">
+                        <span>6 ngày</span>
+                        <span>Quốc tế</span>
+                        <span>Cao cấp</span>
+                    </div>
+                    <div class="service-price">
+                        <strong>28,990,000đ</strong>
+                        <a href="/tours">Xem tour</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+{% include 'components/chat_ai.html' %}
+{% include 'components/footer.html' %}
+
+</body>
+</html>

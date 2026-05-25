@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Khách sạn - TravelAI Booking</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/customer/components.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/customer/tours.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/customer/services.css') }}">
+</head>
+<body>
+
+{% include 'components/header.html' %}
+
+<main class="service-page">
+    <section class="service-hero">
+        <div class="service-hero-content">
+            <p>Dịch vụ lưu trú</p>
+            <h1>Khách sạn đề xuất</h1>
+            <span>
+                Gợi ý khách sạn phù hợp với từng hành trình du lịch, giúp khách hàng dễ dàng
+                lựa chọn nơi lưu trú an toàn và tiện nghi.
+            </span>
+        </div>
+    </section>
+
+    <section class="service-container">
+        <div class="section-heading">
+            <p>Hotel Services</p>
+            <h2>Khách sạn nổi bật</h2>
+            <span>Các khách sạn mẫu dùng để làm giao diện dịch vụ phụ.</span>
+        </div>
+
+        <div class="service-grid-3">
+            <div class="service-item-card">
+                <img src="{{ url_for('static', filename='images/tours/da-nang.jpg') }}" alt="Khách sạn Đà Nẵng">
+                <div class="service-item-content">
+                    <h3>Khách sạn biển Đà Nẵng</h3>
+                    <p>Phù hợp cho tour Đà Nẵng - Hội An, gần biển, tiện di chuyển.</p>
+                    <div class="service-meta">
+                        <span>⭐ 4 sao</span>
+                        <span>Gần biển</span>
+                        <span>Gia đình</span>
+                    </div>
+                    <div class="service-price">
+                        <strong>850,000đ</strong>
+                        <a href="/contact">Tư vấn</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="service-item-card">
+                <img src="{{ url_for('static', filename='images/tours/phu-quoc.jpg') }}" alt="Resort Phú Quốc">
+                <div class="service-item-content">
+                    <h3>Resort Phú Quốc</h3>
+                    <p>Không gian nghỉ dưỡng phù hợp cho cặp đôi và gia đình.</p>
+                    <div class="service-meta">
+                        <span>⭐ 5 sao</span>
+                        <span>Resort</span>
+                        <span>Biển</span>
+                    </div>
+                    <div class="service-price">
+                        <strong>1,500,000đ</strong>
+                        <a href="/contact">Tư vấn</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="service-item-card">
+                <img src="{{ url_for('static', filename='images/tours/han-quoc.jpg') }}" alt="Khách sạn Seoul">
+                <div class="service-item-content">
+                    <h3>Khách sạn Seoul</h3>
+                    <p>Gần trung tâm mua sắm, phù hợp khách đi tour Hàn Quốc.</p>
+                    <div class="service-meta">
+                        <span>⭐ 4 sao</span>
+                        <span>Trung tâm</span>
+                        <span>Mua sắm</span>
+                    </div>
+                    <div class="service-price">
+                        <strong>1,200,000đ</strong>
+                        <a href="/contact">Tư vấn</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+{% include 'components/chat_ai.html' %}
+{% include 'components/footer.html' %}
+
+</body>
+</html>

@@ -1,0 +1,341 @@
+/* ================= RESET TRANG DANH SÁCH TOUR ================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f7fb;
+    color: #1f2937;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* ================= BANNER TRANG TOUR ================= */
+
+.page-banner {
+    min-height: 230px;
+    background:
+        linear-gradient(rgba(15, 23, 42, 0.5), rgba(15, 23, 42, 0.6)),
+        url("../../images/banners/banner-travel.jpg");
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+}
+
+.page-banner div {
+    max-width: 1200px;
+    width: 100%;
+    margin: auto;
+    padding: 30px 20px;
+    color: #ffffff;
+}
+
+.page-banner p {
+    color: #fecdd3;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.page-banner h1 {
+    font-size: 42px;
+    margin: 8px 0;
+}
+
+.page-banner span {
+    color: #e2e8f0;
+    font-size: 17px;
+}
+
+/* ================= LAYOUT CHÍNH ================= */
+
+.tour-page {
+    max-width: 1200px;
+    margin: auto;
+    padding: 34px 20px 70px;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 26px;
+}
+
+/* ================= BỘ LỌC ================= */
+
+.filter-box {
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 22px;
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+    height: fit-content;
+    position: sticky;
+    top: 130px;
+}
+
+.filter-box h2 {
+    font-size: 22px;
+    color: #0f172a;
+    margin-bottom: 18px;
+}
+
+.filter-group {
+    margin-bottom: 16px;
+}
+
+.filter-group label {
+    display: block;
+    font-weight: bold;
+    color: #334155;
+    font-size: 14px;
+    margin-bottom: 7px;
+}
+
+.filter-group input,
+.filter-group select {
+    width: 100%;
+    border: 1px solid #e5e7eb;
+    outline: none;
+    padding: 12px;
+    border-radius: 12px;
+    background: #f9fafb;
+}
+
+.filter-btn {
+    width: 100%;
+    border: none;
+    background: #e11d48;
+    color: #ffffff;
+    padding: 13px;
+    border-radius: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 4px;
+}
+
+.reset-btn {
+    display: block;
+    text-align: center;
+    margin-top: 12px;
+    color: #64748b;
+    font-size: 14px;
+}
+
+.ai-suggest-box {
+    margin-top: 24px;
+    background: #fff1f2;
+    padding: 16px;
+    border-radius: 18px;
+}
+
+.ai-suggest-box h3 {
+    color: #be123c;
+    margin-bottom: 8px;
+}
+
+.ai-suggest-box p {
+    color: #64748b;
+    line-height: 1.6;
+    font-size: 14px;
+}
+
+/* ================= DANH SÁCH TOUR ================= */
+
+.tour-list-area {
+    min-width: 0;
+}
+
+.list-header {
+    background: #ffffff;
+    padding: 18px 20px;
+    border-radius: 20px;
+    box-shadow: 0 8px 22px rgba(15, 23, 42, 0.06);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 22px;
+}
+
+.list-header h2 {
+    font-size: 24px;
+    color: #0f172a;
+    margin-bottom: 4px;
+}
+
+.list-header p {
+    color: #64748b;
+}
+
+.sort-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.sort-box span {
+    color: #64748b;
+    font-size: 14px;
+}
+
+.sort-box select {
+    border: 1px solid #e5e7eb;
+    padding: 9px 12px;
+    border-radius: 12px;
+    outline: none;
+}
+
+.tour-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.tour-card {
+    background: #ffffff;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    transition: 0.3s;
+}
+
+.tour-card:hover {
+    transform: translateY(-4px);
+}
+
+.tour-image {
+    position: relative;
+    height: 100%;
+    min-height: 230px;
+    background: #e2e8f0;
+}
+
+.tour-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.badge {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    background: #e11d48;
+    color: #ffffff;
+    padding: 7px 12px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.tour-content {
+    padding: 22px;
+    display: grid;
+    grid-template-columns: 1fr 180px;
+    gap: 20px;
+}
+
+.tour-main-info h3 {
+    font-size: 22px;
+    color: #0f172a;
+    line-height: 1.4;
+    margin-bottom: 10px;
+}
+
+.description {
+    color: #64748b;
+    line-height: 1.7;
+    margin-bottom: 16px;
+}
+
+.tour-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.tour-meta span {
+    background: #f1f5f9;
+    color: #334155;
+    padding: 8px 10px;
+    border-radius: 999px;
+    font-size: 13px;
+}
+
+.tour-price-box {
+    border-left: 1px solid #e5e7eb;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.tour-price-box p {
+    color: #64748b;
+    font-size: 14px;
+}
+
+.tour-price-box strong {
+    color: #e11d48;
+    font-size: 24px;
+    margin: 4px 0;
+}
+
+.tour-price-box span {
+    color: #64748b;
+    font-size: 13px;
+    margin-bottom: 14px;
+}
+
+.detail-btn,
+.book-btn {
+    text-align: center;
+    padding: 11px 12px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+.detail-btn {
+    background: #f1f5f9;
+    color: #0f172a;
+}
+
+.book-btn {
+    background: #e11d48;
+    color: #ffffff;
+}
+
+/* ================= KHÔNG CÓ KẾT QUẢ ================= */
+
+.empty-box {
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+}
+
+.empty-box h3 {
+    color: #0f172a;
+    margin-bottom: 8px;
+}
+
+.empty-box p {
+    color: #64748b;
+    margin-bottom: 20px;
+}
+
+.empty-box a {
+    background: #e11d48;
+    color: #ffffff;
+    padding: 12px 22px;
+    border-radius: 999px;
+    font-weight: bold;
+}

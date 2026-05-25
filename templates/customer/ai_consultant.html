@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>AI tư vấn tour - TravelAI Booking</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/customer/components.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/customer/tours.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/customer/services.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/customer/responsive.css') }}">
+</head>
+<body>
+
+{% include 'components/header.html' %}
+
+<main class="ai-page">
+
+    <section class="ai-hero">
+        <div>
+            <p>AI TRAVEL ASSISTANT</p>
+            <h1>AI tư vấn chọn tour phù hợp</h1>
+            <span>
+                Nhập nhu cầu của bạn, hệ thống sẽ gợi ý tour dựa trên ngân sách,
+                điểm đến, thời gian và sở thích du lịch.
+            </span>
+        </div>
+    </section>
+
+    <section class="ai-consultant-layout">
+
+        <div class="ai-form-card">
+            <h2>Thông tin cần tư vấn</h2>
+            <p>
+                Đây là chức năng hỗ trợ ra quyết định dựa trên dữ liệu tour trong hệ thống.
+                Khách hàng nhập nhu cầu, hệ thống sẽ lọc và đề xuất tour phù hợp.
+            </p>
+
+            <form method="POST" class="ai-consultant-form">
+
+                <div class="form-group">
+                    <label>Ngân sách tối đa</label>
+                    <input
+                        type="number"
+                        name="budget"
+                        value="{{ budget }}"
+                        placeholder="Ví dụ: 10000000"
+                    >
+                    <small>Nhập số tiền, ví dụ 10000000 nghĩa là 10 triệu.</small>
+                </div>
+
+                <div class="form-group">
+                    <label>Điểm đến mong muốn</label>
+                    <input
+                        type="text"
+                        name="destination"
+                        value="{{ destination }}"
+                        placeholder="Ví dụ: Đà Nẵng, Hàn Quốc, Phú Quốc"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label>Số ngày muốn đi</label>
+                    <select name="duration">
+                        <option value="">Không giới hạn</option>
+                        <option value="3 ngày" {% if duration == "3 ngày" %}selected{% endif %}>Khoảng 3 ngày</option>
+                        <option value="4 ngày" {% if duration == "4 ngày" %}selected{% endif %}>Khoảng 4 ngày</option>
+                        <option value="5 ngày" {% if duration == "5 ngày" %}selected{% endif %}>Khoảng 5 ngày</option>
+                        <option value="6 ngày" {% if duration == "6 ngày" %}selected{% endif %}>Khoảng 6 ngày trở lên</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Sở thích du lịch</label>
+                    <input
+                        type="text"
+                        name="interest"
+                        value="{{ interest }}"
+                        placeholder="Ví dụ: biển, nghỉ dưỡng, mua sắm, gia đình, vui chơi"
+                    >
+                    <small>Hệ thống sẽ tìm trong tên tour, mô tả và lịch trình.</small>
+                </div>
+
+                <button type="submit" class="ai-submit-btn">
+                    Nhận gợi ý tour
+                </button>
+
+            </form>
+        </div>
+
+        <div class="ai-result-card">
+            <h2>Kết quả tư vấn</h2>
+
+            {% if ai_message %}
+                <div class="ai-message-box">
+                    🤖 {{ ai_message }}
+                </div>
+            {% else %}
+                <div class="ai-message-box">
+                    🤖 Hãy nhập nhu cầu của bạn để hệ thống bắt đầu gợi ý tour phù hợp.
+                </div>
+            {% endif %}
+
+            {% if suggested_tours %}
+                <div class="ai-tour-list">
+                    {% for tour in suggested_tours %}
+                        <div class="ai-tour-card">
+                            <img src="{{ url_for('static', filename='images/tours/' + tour[8]) }}"
+                                 alt="{{ tour[1] }}">
+
+                            <div class="ai-tour-info">
+                                <h3>{{ tour[1] }}</h3>
+
+                                <p>📍 {{ tour[2] }}</p>
+                                <p>⏱ {{ tour[6] }}</p>
+                                <p>📅 {{ tour[7] }}</p>
+
+                                <div class="ai-reason-box">
+                                    <b>Lý do gợi ý:</b>
+                                    <span>
+                                        Tour này phù hợp vì có giá trong ngân sách,
+                                        điểm đến/thời gian gần với nhu cầu bạn đã nhập.
+                                    </span>
+                                </div>
+
+                                <div class="ai-tour-bottom">
+                                    <strong>{{ "{:,.0f}".format((tour[5] or 0)|float) }}đ</strong>
+
+                                    <div>
+                                        <a href="/tour/{{ tour[0] }}">Xem chi tiết</a>
+
+                                        {% if session.get("user_id") %}
+                                            <a href="/booking/{{ tour[0] }}" class="book-ai-btn">Đặt tour</a>
+                                        {% else %}
+                                            <a href="{{ url_for('login', next='/booking/' ~ tour[0]) }}" class="book-ai-btn">
+                                                Đăng nhập để đặt
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+    </section>
+
+</main>
+
+{% include 'components/chat_ai.html' %}
+{% include 'components/footer.html' %}
+
+</body>
+</html>

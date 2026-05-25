@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý banner - TravelAI Booking</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin/admin.css') }}">
+</head>
+<body>
+
+<div class="admin-layout">
+
+    <aside class="sidebar">
+        <div class="admin-logo">
+            <h2>TravelAI</h2>
+            <p>Admin Panel</p>
+        </div>
+
+        <nav class="admin-menu">
+            <a href="/admin/dashboard">Tổng quan</a>
+            <a href="/admin/tours">Quản lý tour</a>
+            
+            <a href="/admin/bookings">Quản lý đơn</a>
+            <a href="/admin/banners" class="active">Quản lý banner</a>
+            <a href="/admin/promotions">Quản lý khuyến mãi</a>
+            <a href="/admin/users">Người dùng</a>
+            <a href="/">Về website</a>
+            <a href="/logout">Đăng xuất</a>
+        </nav>
+    </aside>
+
+    <main class="admin-content">
+        <div class="admin-topbar">
+            <div>
+                <h1>Quản lý banner</h1>
+                <p>Thêm, sửa, xóa và ẩn/hiện banner trang chủ.</p>
+            </div>
+
+            <div class="topbar-actions">
+                <a href="/admin/banners/add">+ Thêm banner</a>
+            </div>
+        </div>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="flash-box">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <section class="admin-card">
+            <div class="table-wrapper">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Ảnh</th>
+                            <th>Tiêu đề</th>
+                            <th>Tiêu đề phụ</th>
+                            <th>Trạng thái</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% if banners %}
+                            {% for banner in banners %}
+                                <tr>
+                                    <td>#{{ banner[0] }}</td>
+
+                                    <td>
+                                        <img src="{{ url_for('static', filename='images/banners/' + banner[4]) }}"
+                                             alt="{{ banner[1] }}">
+                                    </td>
+
+                                    <td>{{ banner[1] }}</td>
+                                    <td>{{ banner[2] }}</td>
+
+                                    <td>
+                                        {% if banner[5] == "active" %}
+                                            <span class="status active">Đang hiển thị</span>
+                                        {% else %}
+                                            <span class="status inactive">Đã ẩn</span>
+                                        {% endif %}
+                                    </td>
+
+                                    <td>
+                                        <div class="action-group">
+                                            <a href="/admin/banners/edit/{{ banner[0] }}" class="edit-btn">Sửa</a>
+
+                                            <a href="/admin/banners/delete/{{ banner[0] }}"
+                                               class="delete-btn"
+                                               onclick="return confirm('Bạn có chắc muốn xóa banner này không?')">
+                                                Xóa
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="6">Chưa có banner nào.</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+</div>
+
+</body>
+</html>

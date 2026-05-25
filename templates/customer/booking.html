@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Đặt tour - TravelAI Booking</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/customer/components.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/customer/tours.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/customer/booking.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/customer/responsive.css') }}">
+</head>
+<body>
+
+{% include 'components/header.html' %}
+
+<main class="booking-page">
+
+    <section class="booking-title">
+        <p>TravelAI Booking</p>
+        <h1>Hoàn tất thông tin đặt tour</h1>
+        <span>Vui lòng kiểm tra thông tin tour và nhập thông tin liên hệ chính xác.</span>
+    </section>
+
+    <section class="booking-layout">
+
+        <!-- FORM ĐẶT TOUR -->
+        <form class="booking-form" method="POST">
+            <h2>Thông tin khách hàng</h2>
+
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="booking-message">
+                        {% for message in messages %}
+                            <p>{{ message }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <label>Họ và tên</label>
+            <input type="text" name="full_name" value="{{ session.get('full_name') }}" required>
+
+            <label>Email</label>
+            <input type="email" name="email" value="{{ session.get('email') }}" required>
+
+            <label>Số điện thoại</label>
+            <input type="text" name="phone" placeholder="Nhập số điện thoại" required>
+
+            <label>Số lượng khách</label>
+            <input
+                type="number"
+                name="number_of_people"
+                id="numberOfPeople"
+                min="1"
+                value="1"
+                required
+                oninput="calculateTotalPrice()"
+            >
+           <!-- <label>Ngày khởi hành mong muốn</label>
+            <input type="date" name="selected_departure_date" id="selectedDepartureDate" required>
+            <small>Vui lòng chọn ngày từ ngày mai trở đi.</small> -->
+
+            <label>Ghi chú thêm</label>
+            <textarea
+                name="note"
+                rows="5"
+                placeholder="Ví dụ: đi cùng trẻ em, cần tư vấn khách sạn, cần hỗ trợ thanh toán..."
+            ></textarea>
+            <label>Mã khuyến mãi</label>
+
+            <div class="promotion-apply-box">
+                <input
+                    type="text"
+                    name="promotion_code"
+                    id="promotionCode"
+                    placeholder="Ví dụ: VIETNAM10, GLOBAL15, GROUP4"
+                    oninput="resetPromotionResult()"
+                >
+
+                <button type="button" onclick="applyPromotionCode()">
+                    Áp dụng
+                </button>
+            </div>
+
+            <small>Nhập mã khuyến mãi rồi bấm “Áp dụng” để xem số tiền được giảm trước khi đặt tour.</small>
+
+            <div id="promotionResult" class="promotion-result-box" style="display: none;"></div>
+            <div class="booking-total-mobile">
+                <span>Tổng tiền sau giảm</span>
+                <strong id="totalPriceMobile">{{ "{:,.0f}".format(tour[5]) }}đ</strong>
+            </div>
+
+            <button type="submit">Xác nhận đặt tour</button>
+        </form>
+
+        <!-- THÔNG TIN TOUR -->
+        <aside class="booking-tour-box">
+            <img src="{{ url_for('static', filename='images/tours/' + tour[8]) }}" alt="{{ tour[1] }}">
+
+            <div class="booking-tour-info">
+                <span class="booking-badge">Đang mở bán</span>
+
+                <h2>{{ tour[1] }}</h2>
+
+                <div class="booking-tour-meta">
+                    <p>📍 <b>Điểm đến:</b> {{ tour[2] }}</p>
+                    <p>⏱ <b>Thời gian:</b> {{ tour[6] }}</p>
+                    <p>📅 <b>Khởi hành:</b> {{ tour[7] }}</p>
+                    <p>👤 <b>Khách đặt:</b> {{ session.get('full_name') }}</p>
+                </div>
+
+                <div class="price-line">
+                    <span>Giá / khách</span>
+                    <strong id="pricePerPerson">{{ "{:,.0f}".format(tour[5]) }}đ</strong>
+                </div>
+
+                <div class="total-price-box">
+                    <div class="price-detail-line">
+                        <span>Tạm tính</span>
+                        <strong id="originalPrice">{{ "{:,.0f}".format(tour[5]) }}đ</strong>
+                    </div>
+
+                    <div class="price-detail-line discount-line" id="discountLine" style="display: none;">
+                        <span>Giảm giá</span>
+                        <strong id="discountAmount">-0đ</strong>
+                    </div>
+
+                    <div class="price-detail-line total-final-line">
+                        <span>Tổng tiền sau giảm</span>
+                        <strong id="totalPrice">{{ "{:,.0f}".format(tour[5]) }}đ</strong>
+                    </div>
+                </div>
+
+                <div class="note-box">
+                    Sau khi gửi yêu cầu đặt tour, đơn của bạn sẽ ở trạng thái
+                    <b>Chờ xác nhận</b>. Admin sẽ kiểm tra và xác nhận đơn trong phần quản lý.
+                </div>
+            </div>
+        </aside>
+
+    </section>
+
+</main>
+
+{% include 'components/chat_ai.html' %}
+{% include 'components/footer.html' %}
+
+<script>
+    const pricePerPerson = Number("{{ tour[5] }}");
+
+    let currentDiscountAmount = 0;
+    let appliedPromotionCode = "";
+
+    function formatMoney(value) {
+        return Number(value).toLocaleString("vi-VN") + "đ";
+    }
+
+    function getNumberOfPeople() {
+        const numberInput = document.getElementById("numberOfPeople");
+        let people = Number(numberInput.value);
+
+        if (!people || people < 1) {
+            people = 1;
+            numberInput.value = 1;
+        }
+
+        return people;
+    }
+
+    function calculateTotalPrice() {
+        const people = getNumberOfPeople();
+        const original = pricePerPerson * people;
+        let total = original - currentDiscountAmount;
+
+        if (total < 0) {
+            total = 0;
+        }
+
+        document.getElementById("originalPrice").textContent = formatMoney(original);
+        document.getElementById("totalPrice").textContent = formatMoney(total);
+
+        const totalPriceMobile = document.getElementById("totalPriceMobile");
+        if (totalPriceMobile) {
+            totalPriceMobile.textContent = formatMoney(total);
+        }
+
+        const discountLine = document.getElementById("discountLine");
+        const discountAmount = document.getElementById("discountAmount");
+
+        if (currentDiscountAmount > 0) {
+            discountLine.style.display = "flex";
+            discountAmount.textContent = "-" + formatMoney(currentDiscountAmount);
+        } else {
+            discountLine.style.display = "none";
+            discountAmount.textContent = "-0đ";
+        }
+    }
+
+    function resetPromotionResult() {
+        currentDiscountAmount = 0;
+        appliedPromotionCode = "";
+
+        const resultBox = document.getElementById("promotionResult");
+        resultBox.style.display = "none";
+        resultBox.className = "promotion-result-box";
+
+        calculateTotalPrice();
+    }
+
+    function applyPromotionCode() {
+        const codeInput = document.getElementById("promotionCode");
+        const resultBox = document.getElementById("promotionResult");
+
+        const promotionCode = codeInput.value.trim().toUpperCase();
+        const people = getNumberOfPeople();
+
+        if (!promotionCode) {
+            resultBox.style.display = "block";
+            resultBox.className = "promotion-result-box error";
+            resultBox.innerHTML = "Vui lòng nhập mã khuyến mãi.";
+            return;
+        }
+
+        fetch("/check-promotion", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                promotion_code: promotionCode,
+                price_per_person: pricePerPerson,
+                number_of_people: people
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            resultBox.style.display = "block";
+
+            if (data.success) {
+                currentDiscountAmount = Number(data.discount_amount);
+                appliedPromotionCode = data.promotion_code;
+
+                resultBox.className = "promotion-result-box success";
+                resultBox.innerHTML = `
+                    <b>${data.message}</b><br>
+                    Mã áp dụng: <b>${data.promotion_code}</b><br>
+                    Tạm tính: <b>${formatMoney(data.original_price)}</b><br>
+                    Được giảm: <b>${formatMoney(data.discount_amount)}</b><br>
+                    Tổng sau giảm: <b>${formatMoney(data.total_price)}</b>
+                `;
+
+                calculateTotalPrice();
+            } else {
+                currentDiscountAmount = 0;
+                appliedPromotionCode = "";
+
+                resultBox.className = "promotion-result-box error";
+                resultBox.innerHTML = data.message;
+
+                calculateTotalPrice();
+            }
+        })
+        .catch(error => {
+            resultBox.style.display = "block";
+            resultBox.className = "promotion-result-box error";
+            resultBox.innerHTML = "Có lỗi khi kiểm tra mã khuyến mãi. Vui lòng thử lại.";
+            console.error(error);
+        });
+    }
+
+    document.getElementById("numberOfPeople").addEventListener("input", function() {
+        if (appliedPromotionCode) {
+            applyPromotionCode();
+        } else {
+            calculateTotalPrice();
+        }
+    });
+
+    
+</script>
+
+</body>
+</html>

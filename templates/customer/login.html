@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Đăng nhập - TravelAI Booking</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/customer/auth.css') }}">
+</head>
+<body>
+
+<div class="auth-page">
+
+    <div class="auth-left">
+        <div class="auth-logo">
+            <span>✈</span>
+            <div>
+                <h2>TravelAI</h2>
+                <p>Booking</p>
+            </div>
+        </div>
+
+        <h1>Chào mừng bạn quay lại!</h1>
+        <p>
+            Đăng nhập để đặt tour, xem lịch sử đặt tour và nhận tư vấn du lịch thông minh từ AI.
+        </p>
+
+        <a href="/" class="back-home">← Về trang chủ</a>
+    </div>
+
+    <div class="auth-right">
+        <div class="auth-card">
+            <h2>Đăng nhập</h2>
+            <p class="auth-desc">Nhập email và mật khẩu để tiếp tục.</p>
+
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="auth-message">
+                        {% for message in messages %}
+                            <p>{{ message }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <form method="POST" action="{{ url_for('login', next=request.args.get('next')) }}">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" name="email" placeholder="Nhập email của bạn" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Mật khẩu</label>
+                    <input type="password" name="password" placeholder="Nhập mật khẩu" required>
+                </div>
+
+                <button type="submit">Đăng nhập</button>
+            </form>
+
+            <p class="switch-auth">
+                Chưa có tài khoản?
+                <a href="/register">Đăng ký ngay</a>
+            </p>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

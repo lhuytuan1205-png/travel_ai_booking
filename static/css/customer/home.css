@@ -1,0 +1,405 @@
+/* ================= RESET TRANG CHỦ ================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f7fb;
+    color: #1f2937;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* ================= THÔNG BÁO ================= */
+
+.flash-box {
+    max-width: 1200px;
+    margin: 16px auto 0;
+    background: #dcfce7;
+    color: #166534;
+    padding: 12px 18px;
+    border-radius: 12px;
+}
+
+/* ================= SLIDE BANNER TRANG CHỦ ================= */
+
+.hero-slider {
+    position: relative;
+    height: 620px;
+    overflow: hidden;
+    background: #0f172a;
+}
+
+.slide {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+.slide.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.slide-overlay {
+    height: 100%;
+    background: linear-gradient(rgba(15, 23, 42, 0.35), rgba(15, 23, 42, 0.65));
+    display: flex;
+    align-items: center;
+}
+
+.slide-content {
+    max-width: 1200px;
+    width: 100%;
+    margin: auto;
+    padding: 40px 20px 120px;
+    color: #ffffff;
+}
+
+.small-title {
+    color: #fecdd3;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+.slide-content h1 {
+    font-size: 54px;
+    max-width: 760px;
+    line-height: 1.15;
+    margin-bottom: 18px;
+}
+
+.slide-content p {
+    font-size: 18px;
+    max-width: 650px;
+    color: #f8fafc;
+    line-height: 1.7;
+}
+
+.slide-btn {
+    position: absolute;
+    top: 46%;
+    transform: translateY(-50%);
+    width: 46px;
+    height: 46px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.24);
+    color: #ffffff;
+    font-size: 36px;
+    cursor: pointer;
+    z-index: 5;
+}
+
+.slide-btn:hover {
+    background: #e11d48;
+}
+
+.slide-btn.prev {
+    left: 26px;
+}
+
+.slide-btn.next {
+    right: 26px;
+}
+
+.slide-dots {
+    position: absolute;
+    left: 50%;
+    bottom: 155px;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 5;
+}
+
+.dot {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.55);
+    cursor: pointer;
+}
+
+.dot.active {
+    width: 28px;
+    border-radius: 999px;
+    background: #ffffff;
+}
+
+.slider-search {
+    position: absolute;
+    left: 50%;
+    bottom: 36px;
+    transform: translateX(-50%);
+    width: calc(100% - 40px);
+    z-index: 6;
+}
+
+/* ================= KHUNG TÌM KIẾM TOUR ================= */
+
+.tour-search-box {
+    background: #ffffff;
+    padding: 18px;
+    border-radius: 22px;
+    display: grid;
+    grid-template-columns: 1.3fr 1fr 1fr auto;
+    gap: 14px;
+    max-width: 1000px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.22);
+}
+
+.search-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.search-item label {
+    color: #475569;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.search-item input {
+    border: 1px solid #e5e7eb;
+    padding: 13px;
+    border-radius: 12px;
+    outline: none;
+}
+
+.tour-search-box button {
+    border: none;
+    background: #e11d48;
+    color: #ffffff;
+    padding: 0 24px;
+    border-radius: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* ================= SECTION CHUNG ================= */
+
+.service-section,
+.featured-section,
+.ai-section {
+    max-width: 1200px;
+    margin: auto;
+    padding: 70px 20px 20px;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 34px;
+}
+
+.section-title h2 {
+    font-size: 34px;
+    color: #0f172a;
+    margin-bottom: 8px;
+}
+
+.section-title p {
+    color: #64748b;
+}
+
+/* ================= DỊCH VỤ NỔI BẬT ================= */
+
+.service-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+}
+
+.service-card {
+    background: #ffffff;
+    padding: 26px;
+    border-radius: 22px;
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+    transition: 0.3s;
+}
+
+.service-card:hover {
+    transform: translateY(-6px);
+}
+
+.service-icon {
+    font-size: 34px;
+    margin-bottom: 12px;
+}
+
+.service-card h3 {
+    margin-bottom: 10px;
+    color: #0f172a;
+}
+
+.service-card p {
+    color: #64748b;
+    line-height: 1.6;
+}
+
+/* ================= TOUR NỔI BẬT TRANG CHỦ ================= */
+
+.tour-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+}
+
+.tour-card {
+    background: #ffffff;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.1);
+    transition: 0.3s;
+}
+
+.tour-card:hover {
+    transform: translateY(-6px);
+}
+
+.tour-image {
+    position: relative;
+    height: 190px;
+    background: #e2e8f0;
+}
+
+.tour-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.badge {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    background: #e11d48;
+    color: #ffffff;
+    padding: 7px 12px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.tour-info {
+    padding: 18px;
+}
+
+.tour-info h3 {
+    font-size: 18px;
+    color: #0f172a;
+    line-height: 1.4;
+    min-height: 50px;
+    margin-bottom: 12px;
+}
+
+.tour-info p {
+    color: #64748b;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.tour-bottom {
+    margin-top: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tour-bottom span {
+    display: block;
+    font-size: 13px;
+    color: #64748b;
+}
+
+.tour-bottom strong {
+    color: #e11d48;
+    font-size: 18px;
+}
+
+.detail-btn {
+    background: #fff1f2;
+    color: #e11d48;
+    padding: 9px 12px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.view-more {
+    text-align: center;
+    margin-top: 32px;
+}
+
+.view-more a {
+    background: #e11d48;
+    color: #ffffff;
+    padding: 13px 28px;
+    border-radius: 999px;
+    font-weight: bold;
+}
+
+/* ================= KHỐI GIỚI THIỆU AI TRANG CHỦ ================= */
+
+.ai-section {
+    padding-bottom: 70px;
+}
+
+.ai-content {
+    background: linear-gradient(135deg, #be123c, #e11d48);
+    color: #ffffff;
+    padding: 40px;
+    border-radius: 30px;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 30px;
+    align-items: center;
+}
+
+.ai-content h2 {
+    font-size: 34px;
+    margin-bottom: 14px;
+}
+
+.ai-content p {
+    line-height: 1.8;
+}
+
+.ai-box {
+    background: #ffffff;
+    border-radius: 22px;
+    padding: 20px;
+}
+
+.chat-line {
+    padding: 12px 14px;
+    border-radius: 16px;
+    margin-bottom: 12px;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.chat-line.bot {
+    background: #f1f5f9;
+    color: #0f172a;
+}
+
+.chat-line.user {
+    background: #e11d48;
+    color: #ffffff;
+    margin-left: 40px;
+}

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Sửa tour - TravelAI Booking</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin/admin.css') }}">
+</head>
+<body>
+
+<div class="admin-layout">
+
+    <aside class="sidebar">
+        <div class="admin-logo">
+            <h2>TravelAI</h2>
+            <p>Admin Panel</p>
+        </div>
+
+        <nav class="admin-menu">
+            <a href="/admin/dashboard">Tổng quan</a>
+            <a href="/admin/tours" class="active">Quản lý tour</a>
+            <a href="/admin/bookings">Quản lý đơn</a>
+            <a href="/admin/banners">Quản lý banner</a>
+            <a href="/admin/users">Người dùng</a>
+            <a href="/">Về website</a>
+            <a href="/logout">Đăng xuất</a>
+        </nav>
+    </aside>
+
+    <main class="admin-content">
+        <div class="admin-topbar">
+            <div>
+                <h1>Sửa tour</h1>
+                <p>Cập nhật thông tin tour, đổi ảnh đại diện hoặc thêm/xóa ảnh chi tiết.</p>
+            </div>
+
+            <div class="topbar-actions">
+                <a href="/admin/tours" class="secondary">Quay lại</a>
+            </div>
+        </div>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="flash-box">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <section class="admin-card">
+            <form class="admin-form" method="POST" enctype="multipart/form-data">
+
+                <div class="form-group full">
+                    <label>Tên tour</label>
+                    <input type="text" name="name" value="{{ tour[1] }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Điểm đến</label>
+                    <input type="text" name="destination" value="{{ tour[2] }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Thời gian</label>
+                    <input type="text" name="duration" value="{{ tour[6] }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Giá tour</label>
+                    <input type="number" name="price" value="{{ tour[5] }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Ngày khởi hành</label>
+                    <input type="date" name="departure_date" value="{{ tour[7] }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Trạng thái</label>
+                    <select name="status" required>
+                        <option value="active" {% if tour[9] == "active" %}selected{% endif %}>Đang bán</option>
+                        <option value="inactive" {% if tour[9] == "inactive" %}selected{% endif %}>Ẩn tour</option>
+                    </select>
+                </div>
+
+                <div class="form-group full">
+                    <label>Ảnh đại diện tour</label>
+
+                    <div class="main-image-edit-box">
+                        <div class="current-main-image">
+                            <p>Ảnh hiện tại</p>
+                            <img src="{{ url_for('static', filename='images/tours/' + tour[8]) }}"
+                                alt="{{ tour[1] }}">
+                        </div>
+
+                        <div class="new-main-image">
+                            <p>Chọn ảnh đại diện mới</p>
+                            <input type="file" name="image" accept="image/*">
+                            <small>Nếu không chọn ảnh mới, hệ thống sẽ giữ ảnh đại diện cũ.</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group full">
+                    <label>Ảnh chi tiết hiện có</label>
+
+                    {% if tour_images %}
+                        <div class="admin-gallery-list">
+                            {% for img in tour_images %}
+                                <div class="admin-gallery-item">
+                                    <img src="{{ url_for('static', filename='images/tours/' + img[2]) }}"
+                                         alt="Ảnh chi tiết">
+
+                                    <a href="{{ url_for('admin_delete_tour_image', image_id=img[0], tour_id=tour[0]) }}"
+                                       onclick="return confirm('Bạn có chắc muốn xóa ảnh này không?')">
+                                        Xóa ảnh
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="empty-gallery-text">Tour này chưa có ảnh chi tiết.</p>
+                    {% endif %}
+                </div>
+
+                <div class="form-group full">
+                    <label>Thêm ảnh chi tiết mới</label>
+
+                    <div id="galleryInputList">
+                        <div class="gallery-input-item">
+                            <input type="file" name="gallery_images" accept="image/*">
+                        </div>
+                    </div>
+
+                    <button type="button" class="add-image-btn" onclick="addGalleryInput()">
+                        + Thêm ảnh khác
+                    </button>
+
+                    <small>
+                        Bạn có thể chọn từng ảnh một. Bấm “+ Thêm ảnh khác” để thêm ô chọn ảnh mới.
+                    </small>
+                </div>
+
+                <div class="form-group full">
+                    <label>Mô tả tour</label>
+                    <textarea name="description" rows="5" required>{{ tour[3] }}</textarea>
+                </div>
+
+                <div class="form-group full">
+                    <label>Lịch trình tour</label>
+                    <textarea name="schedule" rows="7" required>{{ tour[4] }}</textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="submit-btn">Lưu thay đổi</button>
+                    <a href="/admin/tours" class="cancel-btn">Hủy</a>
+                </div>
+
+            </form>
+        </section>
+    </main>
+
+</div>
+
+<script>
+    function addGalleryInput() {
+        const galleryInputList = document.getElementById("galleryInputList");
+
+        const item = document.createElement("div");
+        item.className = "gallery-input-item";
+
+        item.innerHTML = `
+            <input type="file" name="gallery_images" accept="image/*">
+            <button type="button" class="remove-image-btn" onclick="removeGalleryInput(this)">
+                Xóa
+            </button>
+        `;
+
+        galleryInputList.appendChild(item);
+    }
+
+    function removeGalleryInput(button) {
+        button.parentElement.remove();
+    }
+</script>
+
+</body>
+</html>

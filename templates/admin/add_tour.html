@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Thêm tour - TravelAI Booking</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin/admin.css') }}">
+</head>
+<body>
+
+<div class="admin-layout">
+
+    <aside class="sidebar">
+        <div class="admin-logo">
+            <h2>TravelAI</h2>
+            <p>Admin Panel</p>
+        </div>
+
+        <nav class="admin-menu">
+            <a href="/admin/dashboard">Tổng quan</a>
+            <a href="/admin/tours" class="active">Quản lý tour</a>
+            <a href="/admin/bookings">Quản lý đơn</a>
+            <a href="/admin/banners">Quản lý banner</a>
+            <a href="/admin/users">Người dùng</a>
+            <a href="/">Về website</a>
+            <a href="/logout">Đăng xuất</a>
+        </nav>
+    </aside>
+
+    <main class="admin-content">
+        <div class="admin-topbar">
+            <div>
+                <h1>Thêm tour mới</h1>
+                <p>Nhập thông tin tour, chọn ảnh đại diện và thêm nhiều ảnh chi tiết nếu có.</p>
+            </div>
+
+            <div class="topbar-actions">
+                <a href="/admin/tours" class="secondary">Quay lại</a>
+            </div>
+        </div>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="flash-box">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <section class="admin-card">
+            <form class="admin-form" method="POST" enctype="multipart/form-data">
+
+                <div class="form-group full">
+                    <label>Tên tour</label>
+                    <input type="text" name="name" placeholder="Ví dụ: Hạ Long - Yên Tử - Sun World" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Điểm đến</label>
+                    <input type="text" name="destination" placeholder="Ví dụ: Hạ Long" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Thời gian</label>
+                    <input type="text" name="duration" placeholder="Ví dụ: 3 ngày 2 đêm" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Giá tour</label>
+                    <input type="number" name="price" placeholder="Ví dụ: 4290000" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Ngày khởi hành</label>
+                    <input type="date" name="departure_date" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Trạng thái</label>
+                    <select name="status" required>
+                        <option value="active">Đang bán</option>
+                        <option value="inactive">Ẩn tour</option>
+                    </select>
+                </div>
+
+                <div class="form-group full">
+                    <label>Ảnh đại diện tour</label>
+                    <input type="file" name="image" accept="image/*" required>
+                    <small>Ảnh này sẽ hiển thị ở trang danh sách tour và ảnh chính của tour.</small>
+                </div>
+
+                <div class="form-group full">
+                    <label>Ảnh chi tiết tour</label>
+
+                    <div id="galleryInputList">
+                        <div class="gallery-input-item">
+                            <input type="file" name="gallery_images" accept="image/*">
+                        </div>
+                    </div>
+
+                    <button type="button" class="add-image-btn" onclick="addGalleryInput()">
+                        + Thêm ảnh khác
+                    </button>
+
+                    <small>
+                        Bạn có thể chọn từng ảnh một. Bấm “+ Thêm ảnh khác” để thêm ô chọn ảnh mới.
+                    </small>
+                </div>
+
+                <div class="form-group full">
+                    <label>Mô tả tour</label>
+                    <textarea name="description" rows="5" placeholder="Nhập mô tả ngắn về tour..." required></textarea>
+                </div>
+
+                <div class="form-group full">
+                    <label>Lịch trình tour</label>
+                    <textarea name="schedule" rows="7" placeholder="Ví dụ: Ngày 1: ... Ngày 2: ..." required></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="submit-btn">Thêm tour</button>
+                    <a href="/admin/tours" class="cancel-btn">Hủy</a>
+                </div>
+
+            </form>
+        </section>
+    </main>
+
+</div>
+
+<script>
+    function addGalleryInput() {
+        const galleryInputList = document.getElementById("galleryInputList");
+
+        const item = document.createElement("div");
+        item.className = "gallery-input-item";
+
+        item.innerHTML = `
+            <input type="file" name="gallery_images" accept="image/*">
+            <button type="button" class="remove-image-btn" onclick="removeGalleryInput(this)">
+                Xóa
+            </button>
+        `;
+
+        galleryInputList.appendChild(item);
+    }
+
+    function removeGalleryInput(button) {
+        button.parentElement.remove();
+    }
+</script>
+
+</body>
+</html>

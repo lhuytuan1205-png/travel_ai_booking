@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Thêm banner - TravelAI Booking</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin/admin.css') }}">
+</head>
+<body>
+
+<div class="admin-layout">
+
+    <aside class="sidebar">
+        <div class="admin-logo">
+            <h2>TravelAI</h2>
+            <p>Admin Panel</p>
+        </div>
+
+        <nav class="admin-menu">
+            <a href="/admin/dashboard">Tổng quan</a>
+            <a href="/admin/tours">Quản lý tour</a>
+            <a href="/admin/banners" class="active">Quản lý banner</a>
+            <a href="/admin/bookings">Quản lý đơn</a>
+            <a href="/admin/users">Người dùng</a>
+            <a href="/">Về website</a>
+            <a href="/logout">Đăng xuất</a>
+        </nav>
+    </aside>
+
+    <main class="admin-content">
+        <div class="admin-topbar">
+            <div>
+                <h1>Thêm banner mới</h1>
+                <p>Banner sẽ hiển thị ở slide trang chủ nếu trạng thái là đang hiển thị.</p>
+            </div>
+
+            <div class="topbar-actions">
+                <a href="/admin/banners" class="secondary">Quay lại</a>
+            </div>
+        </div>
+
+        <section class="admin-card">
+            <form class="admin-form" method="POST" enctype="multipart/form-data">
+
+                <div class="form-group full">
+                    <label>Tiêu đề chính</label>
+                    <input type="text" name="title" placeholder="Ví dụ: Khám phá thế giới theo cách của bạn" required>
+                </div>
+
+                <div class="form-group full">
+                    <label>Tiêu đề phụ</label>
+                    <input type="text" name="subtitle" placeholder="Ví dụ: Du lịch thông minh cùng AI">
+                </div>
+
+                <div class="form-group full">
+                    <label>Mô tả</label>
+                    <textarea name="description" rows="5" placeholder="Nhập mô tả banner..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Ảnh banner</label>
+                    <input type="file" name="image" accept="image/*" required>
+                    <small>Nên dùng ảnh ngang, kích thước khoảng 1600x700px.</small>
+                </div>
+
+                <div class="form-group">
+                    <label>Trạng thái</label>
+                    <select name="status">
+                        <option value="active">Đang hiển thị</option>
+                        <option value="inactive">Ẩn banner</option>
+                    </select>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="submit-btn">Thêm banner</button>
+                    <a href="/admin/banners" class="cancel-btn">Hủy</a>
+                </div>
+
+            </form>
+        </section>
+    </main>
+
+</div>
+
+</body>
+</html>

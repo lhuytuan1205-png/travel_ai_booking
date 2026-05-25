@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ tour[1] }} - TravelAI Booking</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/customer/components.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/customer/tours.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/customer/booking.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/customer/responsive.css') }}">
+</head>
+<body>
+
+{% include 'components/header.html' %}
+
+<main class="detail-page">
+
+    <!-- TIÊU ĐỀ TOUR -->
+    <section class="detail-title-box">
+        <h1>🏝 {{ tour[1] }}</h1>
+        <p>📍 {{ tour[2] }}</p>
+    </section>
+
+    <section class="detail-layout">
+
+        <div class="detail-left">
+
+            <!-- GALLERY ẢNH TOUR -->
+            <div class="detail-gallery-box">
+
+                <div class="main-image-wrap">
+                    <button class="gallery-arrow left" type="button" onclick="prevImage()">‹</button>
+
+                    <img
+                        id="mainTourImage"
+                        src="{{ url_for('static', filename='images/tours/' + tour[8]) }}"
+                        alt="{{ tour[1] }}"
+                    >
+
+                    <button class="gallery-arrow right" type="button" onclick="nextImage()">›</button>
+                </div>
+
+                <div class="thumbnail-list">
+                    <img
+                        src="{{ url_for('static', filename='images/tours/' + tour[8]) }}"
+                        alt="{{ tour[1] }}"
+                        class="thumb active"
+                        onclick="changeMainImage(0)"
+                    >
+
+                    {% if tour_images %}
+                        {% for img in tour_images %}
+                            <img
+                                src="{{ url_for('static', filename='images/tours/' + img[2]) }}"
+                                alt="Ảnh tour"
+                                class="thumb"
+                                onclick="changeMainImage({{ loop.index }})"
+                            >
+                        {% endfor %}
+                    {% endif %}
+                </div>
+
+            </div>
+
+            <!-- THÔNG TIN TOUR -->
+            <div class="detail-card">
+                <h2>Thông tin tour</h2>
+
+                <div class="info-grid">
+                    <div>
+                        <span>Điểm đến</span>
+                        <strong>{{ tour[2] }}</strong>
+                    </div>
+
+                    <div>
+                        <span>Thời gian</span>
+                        <strong>{{ tour[6] }}</strong>
+                    </div>
+
+                    <div>
+                        <span>Ngày khởi hành</span>
+                        <strong>{{ tour[7] }}</strong>
+                    </div>
+
+                    <div>
+                        <span>Trạng thái</span>
+                        <strong>Còn nhận khách</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MÔ TẢ TOUR -->
+            <div class="detail-card">
+                <h2>Mô tả tour</h2>
+                <p>{{ tour[3] }}</p>
+            </div>
+
+            <!-- LỊCH TRÌNH TOUR -->
+            <div class="detail-card">
+                <h2>Lịch trình tour</h2>
+                <p>{{ tour[4] }}</p>
+            </div>
+
+            <!-- AI HỖ TRỢ -->
+            <div class="detail-card">
+                <h2>AI hỗ trợ quyết định</h2>
+                <p>
+                    Nếu khách hàng chưa biết tour này có phù hợp hay không,
+                    AI có thể tư vấn dựa trên ngân sách, số ngày rảnh,
+                    sở thích và điểm đến mong muốn.
+                </p>
+            </div>
+        </div>
+
+        <!-- KHUNG ĐẶT TOUR BÊN PHẢI -->
+        <aside class="detail-right">
+            <div class="booking-summary">
+                <p>Giá từ</p>
+                <h2>{{ "{:,.0f}".format(tour[5]) }}đ</h2>
+                <span>/ khách</span>
+
+                <div class="booking-tour-meta">
+                    <p><b>Mã tour:</b> TOUR{{ tour[0] }}</p>
+                    <p><b>Điểm đến:</b> {{ tour[2] }}</p>
+                    <p><b>Thời gian:</b> {{ tour[6] }}</p>
+                    <p><b>Khởi hành:</b> {{ tour[7] }}</p>
+                </div>
+
+                {% if session.get("user_id") %}
+                    <a href="/booking/{{ tour[0] }}" class="book-now-btn">Đặt tour ngay</a>
+                {% else %}
+                    <a href="{{ url_for('login', next='/booking/' ~ tour[0]) }}" class="book-now-btn">
+                        Đăng nhập để đặt tour
+                    </a>
+                {% endif %}
+
+                <ul>
+                    <li>✔ Tư vấn miễn phí</li>
+                    <li>✔ Hỗ trợ đặt tour online</li>
+                    <li>✔ Email xác nhận tự động</li>
+                    <li>✔ AI hỗ trợ chọn tour</li>
+                </ul>
+            </div>
+        </aside>
+
+    </section>
+
+</main>
+
+{% include 'components/chat_ai.html' %}
+{% include 'components/footer.html' %}
+
+<script>
+    let currentImageIndex = 0;
+
+    const imageList = [
+        "{{ url_for('static', filename='images/tours/' + tour[8]) }}"{% if tour_images %},{% endif %}
+        {% if tour_images %}
+            {% for img in tour_images %}
+                "{{ url_for('static', filename='images/tours/' + img[2]) }}"{% if not loop.last %},{% endif %}
+            {% endfor %}
+        {% endif %}
+    ];
+
+    function showImage(index) {
+        const mainImage = document.getElementById("mainTourImage");
+        const thumbs = document.querySelectorAll(".thumb");
+
+        if (!mainImage || imageList.length === 0) {
+            return;
+        }
+
+        if (index < 0) {
+            currentImageIndex = imageList.length - 1;
+        } else if (index >= imageList.length) {
+            currentImageIndex = 0;
+        } else {
+            currentImageIndex = index;
+        }
+
+        mainImage.src = imageList[currentImageIndex];
+
+        thumbs.forEach(function(thumb) {
+            thumb.classList.remove("active");
+        });
+
+        if (thumbs[currentImageIndex]) {
+            thumbs[currentImageIndex].classList.add("active");
+        }
+    }
+
+    function changeMainImage(index) {
+        showImage(index);
+    }
+
+    function nextImage() {
+        showImage(currentImageIndex + 1);
+    }
+
+    function prevImage() {
+        showImage(currentImageIndex - 1);
+    }
+</script>
+
+</body>
+</html>
