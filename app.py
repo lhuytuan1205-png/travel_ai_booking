@@ -75,6 +75,9 @@ def home():
 # =========================
 @app.route("/tours")
 def tours():
+    promo_code = request.args.get("promo", "").strip().upper()
+    selected_promotion = None
+    promo_eligible_tour_ids = []
     keyword = request.args.get("keyword", "")
     destination = request.args.get("destination", "")
     min_price = request.args.get("min_price", "")
@@ -130,10 +133,56 @@ def tours():
     cur = mysql.connection.cursor()
     cur.execute(query, tuple(params))
     tours = cur.fetchall()
+    if promo_code:
+    cur.execute("""
+        SELECT
+            id,
+            title,
+            description,
+            discount_code,
+            discount_value,
+            discount_type,
+            discount_amount,
+            start_date,
+            end_date,
+            status,
+            min_order,
+            min_people,
+            apply_destination
+        FROM promotions
+        WHERE UPPER(discount_code) = %s
+        AND status = 'active'
+        AND (start_date IS NULL OR start_date <= CURDATE())
+        AND (end_date IS NULL OR end_date >= CURDATE())
+    """, (promo_code,))
+
+    selected_promotion = cur.fetchone()
+
+    if selected_promotion:
+        min_order = float(selected_promotion[10] or 0)
+        apply_destination = selected_promotion[12]
+
+        for tour in tours:
+            tour_id = tour[0]
+            tour_destination = tour[2]
+            tour_price = float(tour[5] or 0)
+
+            enough_price = tour_price >= min_order
+
+            if apply_destination:
+                match_destination = apply_destination.lower() in tour_destination.lower()
+            else:
+                match_destination = True
+
+            if enough_price and match_destination:
+                promo_eligible_tour_ids.append(tour_id)
     cur.close()
 
     return render_template(
         "customer/tours.html",
+        promo_code=promo_code,
+        selected_promotion=selected_promotion,
+        promo_eligible_tour_ids=promo_eligible_tour_ids
         tours=tours,
         keyword=keyword,
         destination=destination,
