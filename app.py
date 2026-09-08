@@ -134,7 +134,7 @@ def tours():
     cur.execute(query, tuple(params))
     tours = cur.fetchall()
     if promo_code:
-    cur.execute("""
+        cur.execute("""
         SELECT
             id,
             title,
